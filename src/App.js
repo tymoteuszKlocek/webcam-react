@@ -1,42 +1,56 @@
-import React, { Component } from 'react';
+import React from 'react';
+import {
+    BrowserRouter as Router,
+    Route,
+    Link
+} from 'react-router-dom';
+
 import './App.css';
 
-import Navigation from './Nav';
-import PanelView from './Panel';
+import Dashboard from './dashboard/Dashboard';
+import Scanner from './scanner/Scanner';
+import Map from './map/Map';
 
-class App extends Component {
+class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            tabs: ['Dashboard', 'Scanner', 'Map'],
-            selectedKey: 1,
             user: 'Tymoteusz'
         }
-    }
-
-    handleNavSelect(i) {
-        // TODO
-        // const nav = this.state.tabs.slice(0);
-        // const tab = nav[i];
-        this.setState({
-            selectedKey: i
-        });
     }
 
     render() {
         return (
             <div className="App">
+
                 <div className="App-header">
-                    <h2>{this.state.user} welcome to WebcamApp</h2>
+                    <h2>Hi {this.state.user}, welcome to WebcamApp</h2>
                 </div>
-
-                <Navigation
-                    tabs={this.state.tabs}
-                    onSelect={i => this.handleNavSelect(i)}
-                    selectedKey={this.state.selectedKey}
-                />
-
-                <PanelView tab={this.state.selectedKey} />
+                <Router>
+                    <div className="container">
+                        <ul className="nav nav-tabs">
+                            <li role="presentation">
+                                <Link to="/"></Link>
+                            </li>
+                            <li role="presentation">
+                                <Link to="/dashboard">Dashboard</Link>
+                            </li>
+                            <li role="presentation">
+                                <Link to="/scanner">Scanner</Link>
+                            </li>
+                            <li role="presentation">
+                                <Link to="/map">Map</Link>
+                            </li>
+                        </ul>
+                        <div >
+                            <Route exact path={"/"} component={Dashboard} />
+                            <Route path={"/scanner"} component={Scanner} />
+                            <Route path={"/scanner/:tag"} component={Scanner} />
+                            <Route path={"/dashboard"} component={Dashboard} />
+                            <Route path={"/map"} component={Map} />
+                        </div>
+                    </div>
+                </Router>
             </div>
         );
     }

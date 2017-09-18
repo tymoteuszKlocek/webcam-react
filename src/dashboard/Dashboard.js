@@ -1,10 +1,10 @@
 import React from 'react';
-import GalleryList from './GalleryList';
+import GalleryList from '../gallery/GalleryList';
 
 class Dashboard extends React.Component {
     render() {
         return (
-            <div>
+            <div className="container">
                 <h3>List of your Galleries</h3>
                 <p>Here you can see all your galleries or add new one.</p>
                 <GalleryList />

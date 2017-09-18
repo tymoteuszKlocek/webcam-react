@@ -1,5 +1,4 @@
 import React from 'react';
-import { Well } from 'react-bootstrap';
 
 class Map extends React.Component {
     constructor() {
@@ -11,11 +10,11 @@ class Map extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="well">
                 <h2>I am Map</h2>
-                <Well>
+                <div >
                     <iframe title={'koko'} src={this.state.src} width={600} height={450} ></iframe>
-                </Well>
+                </div>
             </div>
         )
     }
