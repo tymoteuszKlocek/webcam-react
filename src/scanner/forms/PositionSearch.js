@@ -5,7 +5,7 @@ class PositionSearch extends React.Component {
     render() {
         return (
             <Alert>
-                <h2>I am PositionSearch</h2>
+                <h5>I am PositionSearch, I'll be done later.</h5>
             </Alert>
         )
     }
