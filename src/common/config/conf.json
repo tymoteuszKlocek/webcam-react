@@ -3,7 +3,8 @@
         "SRC": "https://webcamstravel.p.mashape.com/webcams/list/",
         "PARAMS": "/limit=30?show=webcams:location,image,url,statistics",
         "API_KEY": "27CJ6JXzDAmshqOhSle85KVk4Edfp1Rmd4PjsnrmJNbw20YsyA",
-        "RANGE": "200"
+        "RANGE": "200",
+        "NEAR": "nearby="
     },
     "weather": {
         "SRC": "http://api.openweathermap.org/data/2.5/weather?",

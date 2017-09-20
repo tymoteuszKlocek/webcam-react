@@ -45,7 +45,8 @@ class App extends React.Component {
                         <div >
                             <Route exact path={"/"} component={Dashboard} />
                             <Route path={"/scanner"} component={Scanner} />
-                            <Route path={"/scanner/:tag"} component={Scanner} />
+                            {/* <Route path={"/scanner/:tag"} />
+                            <Route path={"/scanner/near/:position"} /> */}
                             <Route path={"/dashboard"} component={Dashboard} />
                             <Route path={"/map"} component={Map} />
                         </div>

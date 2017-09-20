@@ -1,20 +1,38 @@
+// @flow
 import React from 'react';
-//import Webcam from '../webcam/Webcam';
+import Webcam from '../webcam/Webcam';
 
-class WebcamList extends React.Component {
+type Props = {
+    type: string,
+    param: Object,
+    webcams: Array<Object>,
+    onSave: () => void,
+    onDelete: () => void
+}
+
+
+
+class WebcamList extends React.Component<Props> {
+    
+
     render() {
-        return (<div>webcam LIst</div>
-            // <ul className="breadcrumb">
-            //     {
-            //         this.props.webcams.map(webcam => {
-            //             return (
-            //                 <li key={webcam.id}>
-            //                     <Webcam webcam={webcam} />
-            //                 </li>
-            //             )
-            //         })
-            //     }
-            // </ul>
+
+        return (
+            <div>
+                {this.props.webcams.map(webcam => {
+                    return (
+                        <div key={webcam.id}>
+                            <Webcam
+                                param={webcam}
+                                type={this.props.type}
+                                onSave={() => this.props.onSave()}
+                                onHide={() => this.onHide()}
+                                onDelete={() => this.props.onDelete()}
+                            />
+                        </div>
+                    );
+                })}
+            </div>
         )
     }
 }

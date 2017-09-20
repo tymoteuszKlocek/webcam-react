@@ -18,6 +18,11 @@ export default class CountrySearch extends React.Component {
         });
     };
 
+    onSuggestionSelected = (event, { suggestion }) => {
+        let cat = 'country=';
+        this.props.search(cat, suggestion.code);
+    }
+
     onSuggestionsFetchRequested = ({ value }) => {
         this.setState({
             suggestions: getSuggestions(value)
@@ -38,6 +43,7 @@ export default class CountrySearch extends React.Component {
             value,
             onChange: this.onChange
         };
+        
         return (
             <div className="alert alert-success">
                 <p>Write the country name (eg. Poland, France) and select from list.</p>
@@ -49,6 +55,7 @@ export default class CountrySearch extends React.Component {
                         getSuggestionValue={getSuggestionValue}
                         renderSuggestion={renderSuggestion}
                         inputProps={inputProps}
+                        onSuggestionSelected={this.onSuggestionSelected}
                     />
                 </div>
             </div>

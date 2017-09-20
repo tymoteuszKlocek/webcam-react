@@ -1,10 +1,15 @@
 import React from 'react';
 import TagList from './TagList'
 
-class TagSearch extends React.Component {
+
+type Props = {
+    search: (category: string, query: string) => void
+}
+
+class TagSearch extends React.Component<Props> {
     render() {
         return (
-            <TagList />
+            <TagList search={(cat, tag) => this.props.search(cat, tag)}/>
         );
     }
 }
