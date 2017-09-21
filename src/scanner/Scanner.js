@@ -1,13 +1,15 @@
 // @flow
 import React from 'react';
 import Geolocation from '../common/services/geolocation';
-import axios from 'axios';
 import conf from '../common/config/conf.json';
 
 import WebcamList from '../common/lists/WebcamList';
 import CountrySearch from './forms/CountrySearch';
 import TagSearch from './forms/TagSearch';
 import NearBySearch from './forms/NearBySearch';
+import { connect } from 'react-redux';
+import { fetchWebcams } from '../store/actions';
+
 // TODO import PositionSearch from './forms/PositionSearch';
 
 type State = {
@@ -48,13 +50,15 @@ class Scanner extends React.Component<State> {
     }
 
     searchRequest(url) {
-        axios.get(url, {
-            headers: { 'X-Mashape-Authorization': conf.webcamSearch.API_KEY }
-        }).then(resp => {
-            this.setState({ webcams: resp.data.result.webcams });
-        }).catch(function (error) {
-            console.log(error);
-        });
+        this.props.fetchWebcams(url)
+        //actions.fetchWebcams(url)
+        // axios.get(url, {
+        //     headers: { 'X-Mashape-Authorization': conf.webcamSearch.API_KEY }
+        // }).then(resp => {
+        //     this.setState({ webcams: resp.data.result.webcams });
+        // }).catch(function (error) {
+        //     console.log(error);
+        // });
     }
 
     save() {
@@ -66,6 +70,7 @@ class Scanner extends React.Component<State> {
     }
 
     render() {
+        console.log((this.props.webcams))
         return (
             <div>
                 <h3>Scanner is a tool which lets you search for webcams all around the world.</h3>
@@ -80,7 +85,7 @@ class Scanner extends React.Component<State> {
                     search={() => this.searchNearWebcams()}
                 />
                 <WebcamList
-                    webcams={this.state.webcams}
+                    webcams={this.props.webcams}
                     type={this.state.type}
                     onSave={() => this.save()}
                     onDelete={() => this.delete()}
@@ -90,4 +95,19 @@ class Scanner extends React.Component<State> {
     }
 }
 
-export default Scanner;
+const mapStateToProps = (state) => {
+    return {
+        user: state.user,
+        webcams: state.webcams
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchWebcams: (url) => {
+            dispatch(fetchWebcams(url));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Scanner);

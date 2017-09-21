@@ -2,7 +2,9 @@ import React from 'react';
 import {
     BrowserRouter as Router,
     Route,
-    Link
+    Link,
+    Redirect,
+    Switch
 } from 'react-router-dom';
 
 import './App.css';
@@ -43,12 +45,12 @@ class App extends React.Component {
                             </li>
                         </ul>
                         <div >
-                            <Route exact path={"/"} component={Dashboard} />
-                            <Route path={"/scanner"} component={Scanner} />
-                            {/* <Route path={"/scanner/:tag"} />
-                            <Route path={"/scanner/near/:position"} /> */}
-                            <Route path={"/dashboard"} component={Dashboard} />
-                            <Route path={"/map"} component={Map} />
+                            <Route exact path={"/"} render={() => <Redirect to="/dashboard" component={Dashboard} />} />
+                            <Switch  >
+                                <Route path={"/scanner"} component={Scanner} />
+                                <Route path={"/dashboard"} component={Dashboard} />
+                                <Route path={"/map"} component={Map} />
+                            </Switch  >
                         </div>
                     </div>
                 </Router>
@@ -56,5 +58,6 @@ class App extends React.Component {
         );
     }
 }
+
 
 export default App;
