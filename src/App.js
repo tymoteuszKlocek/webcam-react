@@ -12,6 +12,7 @@ import './App.css';
 import Dashboard from './dashboard/Dashboard';
 import Scanner from './scanner/Scanner';
 import Map from './map/Map';
+import LandingPage from './landing-page/LandingPage'
 
 class App extends React.Component {
     constructor() {
@@ -21,19 +22,29 @@ class App extends React.Component {
         }
     }
 
+    requireLogin() {
+        console.log('req')
+        {
+            <Router>
+
+            <Redirect to="/dashboard" />
+
+        </Router>
+        }
+    }
+
     render() {
+        let x = false;
         return (
             <div className="App">
 
                 <div className="App-header">
-                    <h2>Hi {this.state.user}, welcome to WebcamApp</h2>
+                    <h2>Hi USER!!!, welcome to WebcamApp</h2>
                 </div>
+
                 <Router>
                     <div className="container">
                         <ul className="nav nav-tabs">
-                            <li role="presentation">
-                                <Link to="/"></Link>
-                            </li>
                             <li role="presentation">
                                 <Link to="/dashboard">Dashboard</Link>
                             </li>
@@ -45,12 +56,25 @@ class App extends React.Component {
                             </li>
                         </ul>
                         <div >
-                            <Route exact path={"/"} render={() => <Redirect to="/dashboard" component={Dashboard} />} />
-                            <Switch  >
-                                <Route path={"/scanner"} component={Scanner} />
-                                <Route path={"/dashboard"} component={Dashboard} />
-                                <Route path={"/map"} component={Map} />
-                            </Switch  >
+
+                            <Route exact path={"/"}
+                                render={
+                                    () => {
+                                        if (x === true) {
+                                            return (<div>
+                                                <Redirect to="/dashboard" />
+                                                <Switch  >
+                                                    <Route path={"/scanner"} component={Scanner} />
+                                                    <Route path={"/dashboard"} component={Dashboard} />
+                                                    <Route path={"/map"} component={Map} />
+                                                </Switch  ></div>)
+                                    }
+                                        return <LandingPage />
+                                    }
+                                }
+                            />
+
+
                         </div>
                     </div>
                 </Router>

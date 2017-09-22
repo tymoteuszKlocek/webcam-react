@@ -1,12 +1,13 @@
 import { createStore, applyMiddleware } from 'redux';
 import reducers from './reducers';
-import ReduxThunk from 'redux-thunk'; 
+import ReduxThunk from 'redux-thunk';
+import logger from 'redux-logger'
 
-const fetcher = (store) => (next) => (action) => {
-    console.log('middleware works', store.getState());
+const midd = (store) => (next) => (action) => {
+    console.log('middleware test works', store.getState());
     next(action);
 };
 
-const middleware = applyMiddleware(fetcher, ReduxThunk);
+const middleware = applyMiddleware(midd, ReduxThunk, logger);
 
 export default createStore(reducers, middleware);

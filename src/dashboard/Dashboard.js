@@ -1,25 +1,43 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { fetchGalleries } from '../store/actions/galleryActions';
+
+//components
 import GalleryList from '../gallery/GalleryList';
-import store from '../store/store';
 
 class Dashboard extends React.Component {
-    test() {
-        store.dispatch({type: 'ADD_NEW', payload: {name: 'Eryk', age: 34}});
-        
+
+    componentWillMount() {
+        console.log('I fetch galleries')
+        this.props.fetchGalleries();
     }
 
     render() {
-        store.subscribe(() => {
-            console.log('store chanegd ', store.getState())
-        });
+
         return (
             <div className="container">
                 <h3>List of your Galleries</h3>
                 <p>Here you can see all your galleries or add new one.</p>
-                <GalleryList />
+                <GalleryList galleries={this.props.galleries} />
             </div>
         );
     }
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+    return {
+        user: state.user,
+        galleries: state.galleries,
+        position: state.position
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchGalleries: () => {
+            dispatch(fetchGalleries());
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

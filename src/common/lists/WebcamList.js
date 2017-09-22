@@ -10,26 +10,21 @@ type Props = {
     onDelete: () => void
 }
 
-
-
 class WebcamList extends React.Component<Props> {
-    
 
     render() {
-
         return (
             <div>
                 {this.props.webcams.map(webcam => {
                     return (
-                        <div key={webcam.id}>
-                            <Webcam
-                                param={webcam}
-                                type={this.props.type}
-                                onSave={() => this.props.onSave()}
-                                onHide={() => this.onHide()}
-                                onDelete={() => this.props.onDelete()}
-                            />
-                        </div>
+                        <Webcam
+                            key={webcam.webcamID}
+                            webcam={webcam}
+                            type={this.props.type}
+                            onSave={() => this.props.onSave()}
+                            hideWebcam={(id) => this.props.hideWebcam(id)}
+                            onDelete={() => this.props.onDelete()}
+                        />
                     );
                 })}
             </div>

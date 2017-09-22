@@ -26,7 +26,7 @@
         "POS": "51.23776,22.52807"
     },
     "req": {
-        "apiUrl": "http://127.0.0.1:3000",
+        "apiUrl": "http://127.0.0.1:3030",
         "webcamcollections": "/webcamcollections",
         "webcams":  "/webcams",
         "login": "/login",
