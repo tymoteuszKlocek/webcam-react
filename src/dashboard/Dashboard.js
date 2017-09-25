@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchGalleries } from '../store/actions/galleryActions';
+import { fetchGalleries } from '../actions/galleryActions';
 
 //components
 import GalleryList from '../gallery/GalleryList';

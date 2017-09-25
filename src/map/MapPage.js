@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Map extends React.Component {
+class MapPage extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -20,4 +20,4 @@ class Map extends React.Component {
     }
 }
 
-export default Map;
+export default MapPage;

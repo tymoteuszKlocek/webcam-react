@@ -1,6 +1,6 @@
 import axios from 'axios';
-import conf from '../../common/config/conf.json';
-import Geolocation from '../../common/services/geolocation';
+import conf from '../common/config/conf.json';
+import Geolocation from '../common/services/geolocation';
 
 export function fetchWebcams(url) {
 

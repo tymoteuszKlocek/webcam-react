@@ -7,31 +7,13 @@ import {
     Switch
 } from 'react-router-dom';
 
-import './App.css';
-
+import HomePage from './components/home/HomePage';
 import Dashboard from './dashboard/Dashboard';
 import Scanner from './scanner/Scanner';
-import Map from './map/Map';
-import LandingPage from './landing-page/LandingPage'
+import MapPage from './map/MapPage';
+import LoginPage from './landing-page/LoginPage';
 
 class App extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            user: 'Tymoteusz'
-        }
-    }
-
-    requireLogin() {
-        console.log('req')
-        {
-            <Router>
-
-            <Redirect to="/dashboard" />
-
-        </Router>
-        }
-    }
 
     render() {
         let x = false;
@@ -54,6 +36,9 @@ class App extends React.Component {
                             <li role="presentation">
                                 <Link to="/map">Map</Link>
                             </li>
+                            <li role="presentation">
+                                <Link to="/home">Home</Link>
+                            </li>
                         </ul>
                         <div >
 
@@ -62,14 +47,15 @@ class App extends React.Component {
                                     () => {
                                         if (x === true) {
                                             return (<div>
-                                                <Redirect to="/dashboard" />
+                                                <Redirect to="/home" />
                                                 <Switch  >
                                                     <Route path={"/scanner"} component={Scanner} />
                                                     <Route path={"/dashboard"} component={Dashboard} />
-                                                    <Route path={"/map"} component={Map} />
+                                                    <Route path={"/map"} component={MapPage} />
+                                                    <Route path={"/home"} component={HomePage} />
                                                 </Switch  ></div>)
                                     }
-                                        return <LandingPage />
+                                        return <LoginPage actions={this.actions}/>
                                     }
                                 }
                             />

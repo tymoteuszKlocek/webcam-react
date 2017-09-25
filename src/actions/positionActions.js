@@ -1,4 +1,4 @@
-import Geolocation from '../../common/services/geolocation';
+import Geolocation from '../common/services/geolocation';
 
 export function setPosition() {
 

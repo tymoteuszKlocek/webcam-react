@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class LandingPage extends React.Component {
+export default class RegisterPage extends React.Component {
     render() {
         return (
             <div className="col-xs-10 col-sm-6 col-md-6">

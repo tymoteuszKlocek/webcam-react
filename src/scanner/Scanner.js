@@ -2,9 +2,9 @@
 import React from 'react';
 import conf from '../common/config/conf.json';
 import { connect } from 'react-redux';
-import { fetchWebcams, deleteWebcam } from '../store/actions/webcamActions';
-import {  } from '../store/actions/galleryActions';
-import { setPosition, getPosition } from '../store/actions/positionActions';
+import { fetchWebcams, deleteWebcam } from '../actions/webcamActions';
+
+import { setPosition, getPosition } from '../actions/positionActions';
 
 // components
 import WebcamList from '../common/lists/WebcamList';

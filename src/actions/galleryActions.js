@@ -1,11 +1,11 @@
 import axios from 'axios';
-import conf from '../../common/config/conf.json';
+//import conf from '../common/config/conf.json';
 
 export function fetchGalleries() {
 
     return (dispatch) => {
 
-        let url = conf.req.apiUrl + conf.req.webcamcollections;
+        let url = 'l' //conf.req.apiUrl + conf.req.webcamcollections;
         let galleries;
         console.log('gall act')
         axios.get(url).then(resp => {
@@ -19,10 +19,12 @@ export function fetchGalleries() {
 }
 
 export function deleteWebcam(id) {
+
     return (dispatch) => {
         dispatch({
             type: 'DELETE_WEBCAM',
             payload: id
         });
     };
+
 }
