@@ -4,7 +4,7 @@ import ReduxThunk from 'redux-thunk';
 import logger from 'redux-logger'
 
 const midd = (store) => (next) => (action) => {
-    console.log('middleware test works', store.getState());
+    console.log('store:', store.getState());
     next(action);
 };
 

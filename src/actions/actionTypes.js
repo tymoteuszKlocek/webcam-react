@@ -1,5 +1,6 @@
 // login
-export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_ERROR = 'LOGIN_ERROR'
 
 // gallery
 export const DISPLAY_GALLERIES = 'DISPLAY_GALLERIES';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const TextInput = ({ name, label, onChange, placeholder, value, error, type="text" }) => {
-    let wrapperClass = 'col-xs-10 col-sm-6 col-md-6';
+    let wrapperClass = '';
     if (error && error.lenght > 0) {
         wrapperClass += ' has-error'
     }

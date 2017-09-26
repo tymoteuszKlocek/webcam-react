@@ -1,19 +1,27 @@
-import * as types from './actionTypes';  
+import * as types from './actionTypes';
 import SessionApi from '../api/sessionApi';
 
-export function loginSuccess() {  
-  return {type: types.LOG_IN_SUCCESS}
+export function loginSuccess() {
+    return { type: types.LOGIN_SUCCESS }
 }
 
-export function loginUser(credentials) {  
-  console.log(credentials)
-  return function(dispatch) {
-    return SessionApi.login(credentials).then(response => {
-      sessionStorage.setItem('jwt', response.jwt);
-      console.log(response)
-      dispatch(loginSuccess());
-    }).catch(error => {
-      throw(error);
-    });
-  };
+export function loginError() {
+    return { type: types.LOGIN_ERROR }
+}
+
+export function loginUser(credentials) {
+
+    return function (dispatch) {
+        return SessionApi.login(credentials).then(response => {
+            console.log(response)
+            sessionStorage.setItem('token', response.token);
+            if (response.token) {
+                dispatch(loginSuccess());
+            } else {
+                dispatch(loginError());
+            }
+        }).catch(error => {
+            throw (error);
+        });
+    };
 }

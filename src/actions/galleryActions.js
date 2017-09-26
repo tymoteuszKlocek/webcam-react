@@ -1,20 +1,32 @@
-import axios from 'axios';
-//import conf from '../common/config/conf.json';
+import SessionApi from '../api/sessionApi';
+import conf from '../common/config/conf.json';
 
 export function fetchGalleries() {
 
     return (dispatch) => {
 
-        let url = 'l' //conf.req.apiUrl + conf.req.webcamcollections;
-        let galleries;
-        console.log('gall act')
-        axios.get(url).then(resp => {
-            console.log('galleries', resp);
-            galleries = resp;
-            dispatch({ type: 'DISPLAY_GALLERIES', payload: galleries });
-        }).catch(function (error) {
-            dispatch({ type: 'FETCH_WEBCAMS_ERROR', payload: error });
+        let url = conf.req.apiUrl + conf.req.webcamcollections;
+
+        let params = {
+            url: url,
+            method: 'GET'
+        }
+        console.log('gall act', params);
+        return SessionApi.loadData(params).then(response => {
+            console.log(response)
+            return response;
+        }).catch(error => {
+            throw (error);
         });
+        // return function (dispatch) {
+        //     console.log(123123)
+        //     return SessionApi.loadData(params).then(response => {
+        //         console.log(response)
+        //         return response;
+        //     }).catch(error => {
+        //         throw (error);
+        //     });
+        // };
     }
 }
 
