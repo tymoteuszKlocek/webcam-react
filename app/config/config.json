@@ -1,0 +1,20 @@
+{
+    "development": {
+        "username": "tymoteusz",
+        "password": "tymoteusztymoteusz1",
+        "database": "webcam-test",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    },
+    "cors": {
+        "origin": "http://localhost:3000"
+    },
+    "sess": {
+        "secret": "tymonolololo",
+        "saveUninitialized": true,
+        "resave": false
+    },
+    "key": {
+        "privateKey": "totalSecret"
+    }
+}
