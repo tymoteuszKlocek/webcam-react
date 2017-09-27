@@ -13,4 +13,6 @@ export const DELETE_WEBCAM = 'DELETE_WEBCAM';
 export const DISPLAY_WEBCAMS = 'DISPLAY_WEBCAMS';
 export const FETCH_WEBCAMS = 'FETCH_WEBCAMS'
 
-
+// position
+export const SET_POSITION = 'SET_POSITION';
+export const GET_POSITION = 'GET_POSITION';

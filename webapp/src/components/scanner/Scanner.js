@@ -1,13 +1,13 @@
 // @flow
 import React from 'react';
-import conf from '../common/config/conf.json';
+import conf from '../../common/config/conf.json';
 import { connect } from 'react-redux';
-import { fetchWebcams, deleteWebcam } from '../actions/webcamActions';
+import { fetchWebcams, deleteWebcam } from '../../actions/webcamActions';
 
-import { setPosition, getPosition } from '../actions/positionActions';
+import { setPosition, getPosition } from '../../actions/positionActions';
 
 // components
-import WebcamList from '../common/lists/WebcamList';
+import WebcamList from '../../common/lists/WebcamList';
 import CountrySearch from './forms/CountrySearch';
 import TagSearch from './forms/TagSearch';
 import NearBySearch from './forms/NearBySearch';

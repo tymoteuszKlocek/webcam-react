@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { fetchGalleries } from '../actions/galleryActions';
 
 //components
-import GalleryList from '../gallery/GalleryList';
+import GalleryList from './GalleryList';
 
 class Dashboard extends React.Component {
 

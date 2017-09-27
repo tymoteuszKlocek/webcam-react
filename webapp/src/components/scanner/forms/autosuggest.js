@@ -1,5 +1,5 @@
 import React from 'react';
-import { countries } from '../../common/lib/countries.js';
+import { countries } from '../../../common/lib/countries.js';
 
 const getSuggestions = value => {
     const inputValue = value.trim().toLowerCase();

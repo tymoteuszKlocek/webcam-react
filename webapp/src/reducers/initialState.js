@@ -3,5 +3,6 @@ export default {
     session: {
         token: sessionStorage.getItem('token') || ''
     },
-    galleries: []
+    galleries: [],
+    position: ''
 }

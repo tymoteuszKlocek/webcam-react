@@ -9,7 +9,7 @@ function GalleryList(props) {
 
         listItems = props.galleries.gallery.map(gallery => {
             return (
-                <Link to={"webcam/:"+gallery.id} key={gallery.id}>
+                <Link to={"webcams/:"+gallery.id} key={gallery.id}>
                     <li className="list-gorup-item">
                         {gallery.title}
                     </li>
