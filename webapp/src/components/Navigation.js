@@ -2,6 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 class Navigation extends React.Component {
+
+    logout() {
+        sessionStorage.setItem('token', '');
+    }
+
     render() {
         return (
             <div className="container">
@@ -15,8 +20,8 @@ class Navigation extends React.Component {
                     <li role="presentation">
                         <Link to="/map">Map</Link>
                     </li>
-                    <li role="presentation">
-                        <Link to="/logout">Logout</Link>
+                    <li role="presentation" onClick={() => this.logout()}>
+                        <Link to="/">Logout</Link>
                     </li>
                 </ul>
             </div>

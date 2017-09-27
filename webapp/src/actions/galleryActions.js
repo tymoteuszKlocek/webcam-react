@@ -1,33 +1,26 @@
-import SessionApi from '../api/sessionApi';
+import GalleryApi from '../api/galleryApi';
 import conf from '../common/config/conf.json';
+import * as types from './actionTypes';
 
 export function fetchGalleries() {
 
     return (dispatch) => {
 
-        let url = conf.req.apiUrl + conf.req.webcamcollections;
-
         let params = {
-            url: url,
+            url: conf.req.webcamcollections,
             method: 'GET'
         }
-        console.log('gall act', params);
-        return SessionApi.loadData(params).then(response => {
-            console.log(response)
-            return response;
+
+        return GalleryApi.getAllGalleries(params).then(response => {
+            dispatch(fetchGalleriesSucces(response))
         }).catch(error => {
             throw (error);
         });
-        // return function (dispatch) {
-        //     console.log(123123)
-        //     return SessionApi.loadData(params).then(response => {
-        //         console.log(response)
-        //         return response;
-        //     }).catch(error => {
-        //         throw (error);
-        //     });
-        // };
     }
+}
+
+export function fetchGalleriesSucces(resp) {
+    return { type: types.FETCH_GALLERIES_SUCCESS, payload: resp}
 }
 
 export function deleteWebcam(id) {

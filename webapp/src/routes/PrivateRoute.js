@@ -1,8 +1,6 @@
 import React from 'react';
-import {
-    Route,
-    Redirect,
-} from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
+import store from '../store/store';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => (
@@ -18,7 +16,9 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 )
 
 function requireAuth() {
-    if (sessionStorage.getItem('token')) {
+    let state = store.getState();
+
+    if ((!!state.session.token && state.session.token !== '') || sessionStorage.getItem('token') !== '') {
         return true;
     } else {
         return false;

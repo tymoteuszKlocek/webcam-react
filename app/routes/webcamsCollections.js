@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
 
     models.WebcamsCollections.findAll({
         where: {
-            UserId: req.session.user.id
+            UserId: req.decoded.id
         }
     }).then(collections => {
         res.status(200).send(collections);

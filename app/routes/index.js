@@ -1,9 +1,12 @@
 import express from 'express';
+import jwt from 'jsonwebtoken';
 
+import config from '../config/config.json';
 // routes
 import user from './user';
 import webcams from './webcams';
 import webcamsCollections from './webcamsCollections';
+
 
 const router = express.Router();
 
@@ -14,24 +17,31 @@ router.use('/webcams/:id', requireAuth, webcams);
 
 // simple browser refresh mechanism
 router.post('/refresh', (req, res) => {
-    if (!req.session.user) {
+    var token = req.body.token || req.query.token || req.headers['Auth-Token'];
+    if (token) {
         return res.status(401).send({ msg: 'Please login' });
     } else {
-        return res.status(200).send({ success: true, username: req.session.user.username });
+        return res.status(200).send();
     }
 });
 
 // check if user is logged in and has session
 function requireAuth(req, res, next) {
-    var token = req.body.token || req.query.token || req.headers['Auth-Token'];
-    if(token) {
-        console.log('req auht', token);
-        next();
-    } else {
-        console.log('req auht', token);
-        res.status(401).send();
-        return;
-    }
+    var token = req.body.token || req.query.token || req.headers.authorisation;
+    jwt.verify(token, config.key.privateKey, (error, decoded) => {
+        req.decoded = decoded;
+        console.log(decoded)
+    });
+    next();
+    // if(token) {
+    //     console.log('req auht ok');
+    //     next();
+    //     return;
+    // } else {
+    //     console.log('req auht fail');
+    //     res.status(401).send();
+    //     return;
+    // }
 
 }
 

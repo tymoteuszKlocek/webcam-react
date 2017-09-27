@@ -1,5 +1,4 @@
 import express from 'express';
-import nodemailer from 'nodemailer';
 import md5 from 'md5';
 import jwt from 'jsonwebtoken';
 import models from '../models';
@@ -79,25 +78,6 @@ router.post('/register', (req, res) => {
 
 });
 
-// TODO send email with token - optional
-
-// const router = express.Router();
-
-// const transporter = nodemailer.createTransport({
-//     service: 'gmail',
-//     auth: {
-//         user: 'tymoteusz.klocek@gmail.com',
-//         pass: 'Tymon2010'
-//     }
-// });
-
-// const mailOptions = {
-//     form: 'tymoteusz.klocek@gmail.com',
-//     to: 'tymoteusz.klocek@gmail.com',
-//     subject: 'Test',
-//     text: 'Some text'
-// };
-
 //login
 router.post('/login', (req, res) => {
     console.log(req.body, 'login');
@@ -126,7 +106,6 @@ router.post('/login', (req, res) => {
             let tokenData = jwt.sign(user, config.key.privateKey, { expiresIn: 1440 });
 
             let jwtResult = {
-                username: user.username,
                 token: tokenData
             };
 
@@ -134,7 +113,7 @@ router.post('/login', (req, res) => {
             req.getValidationResult().then((result) => {
                 try {
                     result.throw();
-                    console.log('result with token', jwtResult);
+                    console.log('result with token!!!', jwtResult);
                     return res.json(jwtResult);
                     // req.session.user = user;
                     // res.status(200).send({ success: true, username: req.body.username });

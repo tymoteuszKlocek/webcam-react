@@ -3,11 +3,8 @@ import rootReducer from '../reducers/rootReducer';
 import ReduxThunk from 'redux-thunk';
 import logger from 'redux-logger'
 
-const midd = (store) => (next) => (action) => {
-    console.log('store:', store.getState());
-    next(action);
-};
+const middleware = applyMiddleware(ReduxThunk, logger);
 
-const middleware = applyMiddleware(midd, ReduxThunk, logger);
+let store = createStore(rootReducer, middleware);
 
-export default createStore(rootReducer, middleware);
+export default store;

@@ -29,7 +29,7 @@ const allowCrossDomain = (req,res,next) => {
         res.header('Access-Control-Allow-Credentials', true);
         res.header('Access-Control-Allow-Origin', config.cors.origin);
         res.header('Access-Control-Allow-Methods', 'POST,GET,PUT,DELETE,OPTIONS');
-        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Auth-Token');
+        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Auth-Token, AUTHORISATION');
         next();
     } else {
         res.status(401).send();

@@ -1,5 +1,7 @@
 export default {
     webcams: [],
-    session: !!sessionStorage.jwt,
+    session: {
+        token: sessionStorage.getItem('token') || ''
+    },
     galleries: []
 }
