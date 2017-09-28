@@ -10,26 +10,35 @@ type Props = {
     onDelete: () => void
 }
 
-class WebcamList extends React.Component<Props> {
+function WebcamList(props) {
+    
+        let webcams = props.webcams.webcams
+        console.log(webcams);
+        if(props.webcams.webcams !== undefined) {
 
-    render() {
-        return (
-            <div>
-                {this.props.webcams.map(webcam => {
-                    return (
-                        <Webcam
-                            key={webcam.webcamID}
-                            webcam={webcam}
-                            type={this.props.type}
-                            onSave={() => this.props.onSave()}
-                            hideWebcam={(id) => this.props.hideWebcam(id)}
-                            onDelete={() => this.props.onDelete()}
-                        />
-                    );
-                })}
-            </div>
-        )
-    }
+            return (
+                <div>
+                    {
+                        props.webcams.webcams.map(webcam => {
+                            return (
+                                <Webcam
+                                    key={webcam.webcamID}
+                                    webcam={webcam}
+                                    type={props.type}
+                                    onSave={() => props.onSave()}
+                                    hideWebcam={(id) => props.hideWebcam(id)}
+                                    onDelete={() => props.onDelete()}
+                                />
+                            );
+    
+                        })
+                    }
+                </div>
+            )
+        } else {
+            return null;
+        }
+    
 }
 
 export default WebcamList;

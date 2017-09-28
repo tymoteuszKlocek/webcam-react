@@ -4,12 +4,14 @@ import webcams from './webcamsReducer';
 import session from './sessionReducer';
 import galleries from './galleriesReducer';
 import position from './positionReducer';
+import savedWebcams from './savedWebcamsReducer';
 
 const rootReducer = combineReducers({
     webcams,
     session,
     galleries,
-    position
+    position,
+    savedWebcams
 })
 
 export default rootReducer;  

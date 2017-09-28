@@ -9,7 +9,7 @@ router.get('/:id', (req, res) => {
 
     models.Webcams.findAll({
         where: {
-            userID: req.session.user.id,
+            userID: req.decoded.id,
             $and: [
                 { collectionID: req.params.id }
             ]
@@ -29,7 +29,7 @@ router.put('/', (req, res) => {
             webcamID: req.body.webcamID,
             $and: [
                 { collectionID: req.body.collectionID },
-                { userID: req.session.user.id }
+                { userID: req.decoded.id }
             ]
         }
     }).then((webcam) => {

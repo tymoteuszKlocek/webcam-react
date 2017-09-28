@@ -28,7 +28,7 @@
     "req": {
         "apiUrl": "http://127.0.0.1:3030",
         "webcamcollections": "/webcamcollections",
-        "webcams":  "/webcams",
+        "webcams":  "/webcams/",
         "login": "/login",
         "register": "/register",
         "refresh" : "/refresh",

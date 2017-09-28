@@ -17,20 +17,21 @@ class Scanner extends React.Component {
 
     componentWillMount() {
         this.props.setPosition();
+        console.log(this.props)
     }
 
     searchNearWebcams() {
-        let url = conf.webcamSearch.SRC + conf.webcamSearch.NEAR + this.props.position.position + ',' + conf.webcamSearch.RANGE + conf.webcamSearch.PARAMS;
+        let url = conf.webcamSearch.NEAR + this.props.position.position + ',' + conf.webcamSearch.RANGE + conf.webcamSearch.PARAMS;
         this.searchRequest(url);
     }
 
     searchWebcamsByTag(category, query) {
-        let url = conf.webcamSearch.SRC + category + query + conf.webcamSearch.PARAMS;
+        let url = category + query + conf.webcamSearch.PARAMS;
         this.searchRequest(url);
     }
 
     searchWebcamsByCountry(category, query) {
-        let url = conf.webcamSearch.SRC + category + query + conf.webcamSearch.PARAMS;
+        let url = category + query + conf.webcamSearch.PARAMS;
         this.searchRequest(url);
     }
 
@@ -47,6 +48,7 @@ class Scanner extends React.Component {
     }
 
     render() {
+        console.log(this.props)
         return (
             <div>
                 <h3>Scanner is a tool which lets you search for webcams all around the world.</h3>
@@ -59,6 +61,7 @@ class Scanner extends React.Component {
                 <NearBySearch
                     search={() => this.searchNearWebcams()}
                 />
+
                 <WebcamList
                     webcams={this.props.webcams}
                     type={'scanner'}
@@ -73,9 +76,10 @@ class Scanner extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        user: state.user,
+        session: state.session,
         webcams: state.webcams,
-        position: state.position
+        position: state.position,
+        galleries: state.galleries
     };
 };
 

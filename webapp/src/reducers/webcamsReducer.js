@@ -17,8 +17,8 @@ export default function webcamsReducer(state = initialState.webcams, action) {
             state = state.filter((webcam) => webcam.webcamID !== action.payload);
             break;
         }
-        case types.FETCH_WEBCAMS: {
-            console.log('fetch webcams in reducer')
+        case types.FETCH_WEBCAMS_SUCCESS: {
+            console.log('fetch webcams in reducer', action.payload)
             //TODO put this in SAVE_WEBCAMS and test
             state = { ...state, webcams: action.payload };
             break;
