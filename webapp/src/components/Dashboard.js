@@ -17,7 +17,7 @@ class Dashboard extends React.Component {
             <div className="container">
                 <h3>List of your Galleries</h3>
                 <p>Here you can see all your galleries or add new one.</p>
-                <GalleryList 
+                <GalleryList
                     galleries={this.props.galleries}
                     onClick={(id) => { this.props.uploadWebcams(id) }}
                 />
@@ -28,11 +28,12 @@ class Dashboard extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log(state)
     return {
         user: state.user,
         galleries: state.galleries,
         position: state.position,
-        webcams: state.saveWebcams
+        webcams: state.savedWebcams
     };
 };
 

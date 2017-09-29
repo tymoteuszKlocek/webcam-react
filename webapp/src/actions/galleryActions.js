@@ -1,17 +1,12 @@
 import GalleryApi from '../api/galleryApi';
-import conf from '../common/config/conf.json';
 import * as types from './actionTypes';
 
 export function fetchGalleries() {
 
     return (dispatch) => {
 
-        let params = {
-            url: conf.req.webcamcollections,
-            method: 'GET'
-        }
-
-        return GalleryApi.getAllGalleries(params).then(response => {
+        return GalleryApi.getAllGalleries().then(response => {
+            console.log(response);
             dispatch(fetchGalleriesSucces(response))
         }).catch(error => {
             throw (error);

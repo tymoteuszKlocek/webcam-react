@@ -11,13 +11,12 @@ type Props = {
 }
 
 function WebcamList(props) {
-console.log(props.webcams.length)
-    if (props.webcams !== undefined && props.webcams.length !== 0) {
 
+    if (props.webcams !== undefined && props.webcams.length !== 0) {
         return (
             <div>
                 {
-                    props.webcams.webcams.map(webcam => {
+                    props.webcams.savedWebcams.map(webcam => {
                         return (
                             <Webcam
                                 key={webcam.webcamID}

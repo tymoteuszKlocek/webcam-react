@@ -56,6 +56,7 @@ export default class WebcamApi {
     static fetchSavedWebcams(id) {
 
         let url = conf.req.apiUrl + conf.req.webcams + id;
+        console.log(url)
         const headers = this.myWebcamsRequestHeaders();
         const request = new Request(url, {
             method: 'GET',

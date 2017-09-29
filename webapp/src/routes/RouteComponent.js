@@ -6,7 +6,6 @@ import Dashboard from '../components/Dashboard';
 import Scanner from '../components/scanner/Scanner';
 import MapPage from '../components/MapPage';
 import LoginPage from '../auth/LoginPage';
-import GalleryList from '../components/GalleryList';
 import PrivateRoute from './PrivateRoute';
 //import WebcamList from '../components/WebcamList';
 
@@ -16,7 +15,6 @@ const RouteComponent = () => (
         <Route path="/login" component={LoginPage} />
         <PrivateRoute path="/dashboard" component={Dashboard} />
         <PrivateRoute path="dashboard/:id" component={Dashboard} />
-        <PrivateRoute path="/gallery/:id" component={GalleryList} />
         <PrivateRoute path="/scanner" component={Scanner} />
         <PrivateRoute path="/map" component={MapPage} />
         <Route path="/logout" component={HomePage} />

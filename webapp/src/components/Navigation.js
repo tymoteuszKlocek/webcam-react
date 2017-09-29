@@ -1,11 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { logout } from '../actions/sessionActions';
+import { connect  } from 'react-redux';
 
 class Navigation extends React.Component {
-
-    logout() {
-        sessionStorage.setItem('token', '');
-    }
 
     render() {
         return (
@@ -20,7 +18,7 @@ class Navigation extends React.Component {
                     <li role="presentation">
                         <Link to="/map">Map</Link>
                     </li>
-                    <li role="presentation" onClick={() => this.logout()}>
+                    <li role="presentation" onClick={() => this.props.logout()}>
                         <Link to="/">Logout</Link>
                     </li>
                 </ul>
@@ -29,4 +27,19 @@ class Navigation extends React.Component {
     }
 }
 
-export default Navigation;
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        logout: () => {
+            dispatch(logout());
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

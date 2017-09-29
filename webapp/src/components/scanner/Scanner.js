@@ -17,7 +17,6 @@ class Scanner extends React.Component {
 
     componentWillMount() {
         this.props.setPosition();
-        console.log(this.props)
     }
 
     searchNearWebcams() {

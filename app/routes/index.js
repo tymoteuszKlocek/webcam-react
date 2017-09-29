@@ -17,7 +17,7 @@ router.use('/webcams/:id', requireAuth, webcams);
 
 // simple browser refresh mechanism
 router.post('/refresh', (req, res) => {
-    var token = req.body.token || req.query.token || req.headers['Auth-Token'];
+    var token = req.body.token || req.query.token || req.headers.authorisation;
     if (token) {
         return res.status(401).send({ msg: 'Please login' });
     } else {
@@ -27,22 +27,21 @@ router.post('/refresh', (req, res) => {
 
 // check if user is logged in and has session
 function requireAuth(req, res, next) {
-    var token = req.body.token || req.query.token || req.headers.authorisation;
+    var token = req.headers.authorisation;
+    console.log('req.headers.authorisation', req.headers['authorisation'], 'lol', JSON.stringify(res.headers))
     jwt.verify(token, config.key.privateKey, (error, decoded) => {
-        req.decoded = decoded;
-        console.log(decoded)
+        if (error) {
+            res.error = error;
+            console.log(error);
+            next();
+            res.decoded = decoded;
+            console.log(decoded)
+            //return res.status(401).send(error);
+        } else {
+            res.decoded = decoded;
+            next();
+        }
     });
-    next();
-    // if(token) {
-    //     console.log('req auht ok');
-    //     next();
-    //     return;
-    // } else {
-    //     console.log('req auht fail');
-    //     res.status(401).send();
-    //     return;
-    // }
-
 }
 
 module.exports = router;

@@ -80,7 +80,7 @@ router.post('/register', (req, res) => {
 
 //login
 router.post('/login', (req, res) => {
-    console.log(req.body, 'login');
+    console.log(req.body, 'login', req.headers);
 
     let schema = {
         'username': {
@@ -103,7 +103,7 @@ router.post('/login', (req, res) => {
 
         } else if (hashPass === user.password) {
 
-            let tokenData = jwt.sign(user, config.key.privateKey, { expiresIn: 1440 });
+            let tokenData = jwt.sign(user, config.key.privateKey, { expiresIn: 14400 });
 
             let jwtResult = {
                 token: tokenData
@@ -115,8 +115,6 @@ router.post('/login', (req, res) => {
                     result.throw();
                     console.log('result with token!!!', jwtResult);
                     return res.json(jwtResult);
-                    // req.session.user = user;
-                    // res.status(200).send({ success: true, username: req.body.username });
                 } catch (error) {
                     res.status(200).send({ success: false, error: 'Invalid username or password' });
                 }
@@ -132,6 +130,7 @@ router.post('/login', (req, res) => {
 
 // logout
 router.post('/logout', (req, res) => {
+    console.log('logout done', req.headers,  req.config.data)
     req.session.destroy();
     res.status(200).send({ logged: false });
 });
