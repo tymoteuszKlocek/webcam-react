@@ -130,9 +130,7 @@ router.post('/login', (req, res) => {
 
 // logout
 router.post('/logout', (req, res) => {
-    console.log('logout done', req.headers,  req.config.data)
-    req.session.destroy();
-    res.status(200).send({ logged: false });
+    res.status(200).send();
 });
 
 

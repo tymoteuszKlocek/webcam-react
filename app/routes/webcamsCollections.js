@@ -5,7 +5,7 @@ const router = express.Router();
 
 /* GET user collections. */
 router.get('/', (req, res) => {
-    console.log('decoded: ', req.decoded)
+    console.log('req.decoded: ', req.decoded)
     models.WebcamsCollections.findAll({
         where: {
             UserId: req.decoded.id
@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
     }).then(collections => {
         res.status(200).send(collections);
     }).catch((error) => {
-        res.status(200).send(error);
+        console.log(error);
     });
 });
 

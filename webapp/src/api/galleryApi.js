@@ -8,39 +8,23 @@ class GalleryApi {
 
         let token = sessionStorage.getItem('token');
         let url = conf.req.apiUrl + conf.req.webcamcollections;
-        var myHeaders = new Headers({
-            'Content-Type': 'application/json',
-            'Authorisation': token
+
+        const request = new Request(url, {
+            method: 'GET',
+            headers: new Headers({
+                'Authorisation': `${token}`
+            }),
+
         });
 
-        console.log('req', myHeaders)
-        return axios.get(url, {
-            headers: myHeaders
-        }).then(resp => {
-            return resp.json();
-        }).catch( error => {
+        return fetch(request).then(response => {
+            return response.json();
+            console.log(response);
+        }).catch(error => {
+            console.log('sesAPI', error)
             return error;
-        })
+        });
     }
-
-    // static getAllGalleries() {
-    //     const headers = this.requestHeaders();
-    //     const request = new Request(conf.req.apiUrl + conf.req.webcamcollections, {
-    //         method: 'GET',
-    //         headers: headers
-    //     })
-
-    //     let url = conf.req.apiUrl + conf.req.webcamcollections;
-
-    //     console.log('req', request)
-    //     return axios.get(url, {
-    //         headers: this.requestHeaders()
-    //     }).then(resp => {
-    //         return resp.json();
-    //     }).catch( error => {
-    //         return error;
-    //     })
-    // }
 }
 
 export default GalleryApi;

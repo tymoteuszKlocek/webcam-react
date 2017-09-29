@@ -17,6 +17,7 @@ class SessionApi {
         const request = new Request((conf.req.apiUrl + '/login'), {
             method: 'POST',
             headers: new Headers({
+                'Auth-Token': 'test',
                 'Content-Type': 'application/json'
             }),
             body: JSON.stringify(credentials)

@@ -5,8 +5,6 @@ const router = express.Router();
 
 router.get('/:id', (req, res) => {
 
-    req.session.collectionID = req.params.id;
-
     models.Webcams.findAll({
         where: {
             userID: req.decoded.id,
@@ -54,7 +52,7 @@ router.put('/', (req, res) => {
                 link: req.body.link,
                 webcamID: req.body.webcamID,
                 collectionID: req.body.collectionID,
-                userID: req.session.user.id
+                userID: req.decoded.user.id
             }).then(() => {
 
                 res.status(200).send({ success: true, msg: 'New webcam saved.' });

@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 function GalleryList(props) {
 
     let listItems = undefined;
-
-    if (props.galleries.gallery !== undefined) {
+    console.log(props.galleries.length)
+    if (props.galleries.length !== 0) {
         listItems = props.galleries.gallery.map(gallery => {
             return (
                 <Link to={"dashboard/" + gallery.id} className="list-gorup-item" type="button" key={gallery.id}>

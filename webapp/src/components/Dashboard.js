@@ -12,7 +12,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        console.log('dash prop', this.props);
+
         return (
             <div className="container">
                 <h3>List of your Galleries</h3>
@@ -28,7 +28,6 @@ class Dashboard extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         user: state.user,
         galleries: state.galleries,

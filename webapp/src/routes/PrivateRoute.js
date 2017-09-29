@@ -20,7 +20,7 @@ function requireAuth() {
     let state = store.getState();
 
     if ((!!state.session.token && state.session.token !== '') || sessionStorage.getItem('token') !== '') {
-        console.log('auth ok', sessionStorage.getItem('token'), 'state', state);
+        console.log('auth ok');
         return true;
     } else {
         console.log('no Authorisation!');

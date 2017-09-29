@@ -27,18 +27,17 @@ router.post('/refresh', (req, res) => {
 
 // check if user is logged in and has session
 function requireAuth(req, res, next) {
-    var token = req.headers.authorisation;
-    console.log('req.headers.authorisation', req.headers['authorisation'], 'lol', JSON.stringify(res.headers))
-    jwt.verify(token, config.key.privateKey, (error, decoded) => {
+    var token = req.body.token || req.query.token || req.headers.authorisation;
+
+    console.log('token in require auth', req.headers.authorisation);
+   
+    jwt.verify('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTksInVzZXJuYW1lIjoidXNlciIsInBhc3N3b3JkIjoiMWExZGM5MWM5MDczMjVjNjkyNzFkZGYwYzk0NGJjNzIiLCJlbWFpbCI6IndlckB3ZXIucGwiLCJ3ZWJjYW1zY29sbGVjdGlvbnNJZCI6bnVsbCwiY3JlYXRlZEF0IjoiMjAxNy0wOS0wOVQwOToxNzo0Ni4wMDBaIiwidXBkYXRlZEF0IjoiMjAxNy0wOS0wOVQwOToxNzo0Ni4wMDBaIiwiaWF0IjoxNTA2Njg5NTY5LCJleHAiOjE1MDY3MDM5Njl9.ZUBWYC1qEdrNhwjmHGRnj6frOBGDh3Dl5y6HMpa0g3c', config.key.privateKey, (error, decoded) => {
         if (error) {
             res.error = error;
             console.log(error);
-            next();
-            res.decoded = decoded;
-            console.log(decoded)
-            //return res.status(401).send(error);
+            return res.status(401).send(error);
         } else {
-            res.decoded = decoded;
+            req.decoded = decoded;
             next();
         }
     });
