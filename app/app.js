@@ -43,7 +43,7 @@ app.use(expressValidator());
 app.use(cookieParser());
 app.use(allowCrossDomain);
 // session
-app.use(session(config.sess));
+//app.use(session(config.sess));
 
 // routes
 app.use('/', index);

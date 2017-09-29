@@ -18,7 +18,7 @@ class GalleryApi {
             method: 'GET',
             headers: headers
         })
-
+        console.log(request)
         return fetch(request).then(resp => {
             return resp.json();
         }).catch( error => {

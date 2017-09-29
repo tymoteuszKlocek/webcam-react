@@ -11,7 +11,7 @@ type Props = {
 }
 
 function WebcamList(props) {
-console.log(props.webcams.length)
+
     if (props.webcams !== undefined && props.webcams.length !== 0) {
 
         return (

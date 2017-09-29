@@ -30,7 +30,8 @@ function requireAuth(req, res, next) {
     var token = req.body.token || req.query.token || req.headers.authorisation;
     jwt.verify(token, config.key.privateKey, (error, decoded) => {
         req.decoded = decoded;
-        console.log(decoded)
+        console.log('token decoded', decoded, error)
+        console.log(1, req.body.token, 2, req.query.token , 3, req.headers.authorisation)
     });
     next();
     // if(token) {
