@@ -2,12 +2,12 @@
 import React from 'react';
 import conf from '../../common/config/conf.json';
 import { connect } from 'react-redux';
-import { fetchWebcams, deleteWebcam } from '../../actions/webcamActions';
-
+import { fetchWebcams, hideWebcam, saveWebcam } from '../../actions/webcamActions';
+import { fetchGalleries } from '../../actions/galleryActions';
 import { setPosition, getPosition } from '../../actions/positionActions';
 
 // components
-import WebcamList from '../../common/lists/WebcamList';
+import WebcamList from '../WebcamList';
 import CountrySearch from './forms/CountrySearch';
 import TagSearch from './forms/TagSearch';
 import NearBySearch from './forms/NearBySearch';
@@ -17,16 +17,19 @@ class Scanner extends React.Component {
 
     componentWillMount() {
         this.props.setPosition();
+        this.props.fetchGalleries();
     }
 
     searchNearWebcams() {
         let url = conf.webcamSearch.NEAR + this.props.position.position + ',' + conf.webcamSearch.RANGE + conf.webcamSearch.PARAMS;
         this.searchRequest(url);
+        console.log(url)
     }
 
     searchWebcamsByTag(category, query) {
         let url = category + query + conf.webcamSearch.PARAMS;
         this.searchRequest(url);
+        console.log(url)
     }
 
     searchWebcamsByCountry(category, query) {
@@ -38,18 +41,18 @@ class Scanner extends React.Component {
         this.props.fetchWebcams(url)
     }
 
-    save() {
-        console.log('save')
+    saveWebcam(galleryId, webcam) {
+        this.props.saveWebcam(galleryId, webcam);
     }
 
-    delete() {
-        console.log('del')
+    hideWebcam(id) {
+        console.log('hideWebcam', id);
+        this.props.hideWebcam(id);
     }
 
     render() {
-        console.log(this.props)
         return (
-            <div>
+            <div className="container">
                 <h3>Scanner is a tool which lets you search for webcams all around the world.</h3>
                 <CountrySearch
                     search={(cat, country) => this.searchWebcamsByCountry(cat, country)}
@@ -60,13 +63,12 @@ class Scanner extends React.Component {
                 <NearBySearch
                     search={() => this.searchNearWebcams()}
                 />
-
                 <WebcamList
                     webcams={this.props.webcams}
+                    galleries={this.props.galleries}
                     type={'scanner'}
-                    onSave={() => this.save()}
-                    onDelete={() => this.delete()}
-                    hideWebcam={(id) => this.props.deleteWebcam(id)}
+                    onSave={(galleryId, webcam) => this.saveWebcam(galleryId, webcam)}
+                    hideWebcam={(id) => this.hideWebcam(id)}
                 />
             </div>
         )
@@ -87,14 +89,20 @@ const mapDispatchToProps = (dispatch) => {
         fetchWebcams: (url) => {
             dispatch(fetchWebcams(url));
         },
+        fetchGalleries: () => {
+            dispatch(fetchGalleries());
+        },
         setPosition: () => {
             dispatch(setPosition());
         },
         getPosition: () => {
             dispatch(getPosition());
         },
-        deleteWebcam: (id) => {
-            dispatch(deleteWebcam(id));
+        hideWebcam: (id) => {
+            dispatch(hideWebcam(id));
+        },
+        saveWebcam: (galleryId, webcam) => {
+            saveWebcam(galleryId, webcam);
         }
     };
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 
+// QUESTION: shouldn't I use functions instead of class like below? Why?
 const TextInput = ({ name, label, onChange, placeholder, value, error, type="text" }) => {
     let wrapperClass = '';
     if (error && error.lenght > 0) {

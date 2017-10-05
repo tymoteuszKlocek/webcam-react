@@ -1,6 +1,5 @@
 import conf from '../common/config/conf';
 import axios from 'axios';
-import store from '../store/store';
 
 export default class WebcamApi {
 
@@ -11,16 +10,16 @@ export default class WebcamApi {
     }
 
     static myWebcamsRequestHeaders() {
-        let state = store.getState();
-        let token = state.session.token;
+        let token = sessionStorage.getItem('token');
         return {
-            'AUTHORISATION': `${token}`
+            'content-type': 'application/json',
+            'Authorisation': `${token}`
         }
     }
 
     static fetchNewWebcams(params) {
 
-        let url = conf.webcamSearch.SRC + params
+        const url = conf.webcamSearch.SRC + params
         return axios.get(url, {
             headers: this.newWebcamsRequestHeaders()
         })
@@ -55,22 +54,63 @@ export default class WebcamApi {
 
     static fetchSavedWebcams(id) {
 
-        let url = conf.req.apiUrl + conf.req.webcams + id;
-        console.log(url)
+        const url = conf.req.apiUrl + conf.req.webcams + id;
         const headers = this.myWebcamsRequestHeaders();
         const request = new Request(url, {
             method: 'GET',
             headers: headers
         });
 
-        return fetch(request).then(resp => {
-            console.log(1212, resp);
-            return resp.json();
-        }).catch(error => {
-            return error;
+        return axios.get(url, {
+            headers: headers
+        })
+            .then(resp => {
+                return resp.data;
+            }).catch(error => {
+                return error;
+            });
+    }
+
+    static saveWebcam(galleryId, webcam) {
+
+        const url = conf.req.apiUrl + conf.req.webcams;
+        const headers = this.myWebcamsRequestHeaders();
+        const requestObj = {
+            webcam: webcam,
+            collectionID: galleryId
+        };
+
+        return axios.put(url, {
+            headers: headers,
+            body: requestObj,
+        }).then(resp => {
+            return resp;
+        }).catch(err => {
+            console.log(err);
         });
     }
 
+    static deleteWebcam(webcam) {
+
+        const url = conf.req.apiUrl + conf.req.webcams + 'delete/';
+        const headers = this.myWebcamsRequestHeaders();
+        const requestObj = {
+            webcamID: webcam.webcamID,
+            collectionID: webcam.collectionID /// you should send id (but u nedd two ids)
+        };
+
+        return axios.post(url, {
+            headers: headers,
+            params: requestObj
+        }).then(resp => {
+            console.log('deleted', resp)
+            if (resp.data.success === true) {
+                return resp.data;
+            }
+        }).catch(err => {
+            console.log(err);
+        });
+    }
 }
 
 export function parseJSON(response) {

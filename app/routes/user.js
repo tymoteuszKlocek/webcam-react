@@ -8,7 +8,7 @@ const router = express.Router();
 
 // register
 router.post('/register', (req, res) => {
-
+    console.log(req.body, 'register', req.headers);
     let schema = {
         'email': {
             notEmpty: true,
@@ -48,7 +48,7 @@ router.post('/register', (req, res) => {
         } else {
 
             req.checkBody(schema);
-            req.check('password', 'Password not confirmed - repeat the same password!').equals(req.body.confirmPassword);
+            req.check('password', 'Password not confirmed - repeat the same password!').equals(req.body.confirmpassword);
             req.getValidationResult().then((result) => {
 
                 try {
@@ -114,7 +114,9 @@ router.post('/login', (req, res) => {
                 try {
                     result.throw();
                     console.log('result with token!!!', jwtResult);
-                    return res.json(jwtResult);
+                    res.token = jwtResult
+                    res.json(jwtResult);
+                    return res.status(200).send();
                 } catch (error) {
                     res.status(200).send({ success: false, error: 'Invalid username or password' });
                 }

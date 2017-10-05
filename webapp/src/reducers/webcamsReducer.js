@@ -1,29 +1,24 @@
 import * as types from '../actions/actionTypes';
 import initialState from './initialState';
 
+//  webcam reducer is for managing webcams from webcam.travel.com (opposite to savedWebcams reducer wich manages webcams from db)
 export default function webcamsReducer(state = initialState.webcams, action) {
+
     switch (action.type) {
-        case types.SAVE_WEBCAM: {
-            state = { ...state, webcams: action.payload };
-            console.log('save webcams', state)
-            break;
-        }
-        // TODO: I don't want to store every response, just last one to display it
-        case types.DISPLAY_WEBCAMS: {
-            state = action.payload;
-            break;
-        }
-        case types.DELETE_WEBCAM: {
-            state = state.filter((webcam) => webcam.webcamID !== action.payload);
+        case types.HIDE_WEBCAM: {
+            state = state.filter((webcam) => {
+                if (webcam.webcamID !== action.payload) {
+                    return webcam;
+                }
+            });
             break;
         }
         case types.FETCH_WEBCAMS_SUCCESS: {
-            state = { ...state, webcams: action.payload };
-            break;
+            return action.payload;
         }
         default: {
             return state;
         }
     }
     return state;
-};
+}

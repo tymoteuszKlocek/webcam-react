@@ -4,7 +4,7 @@ import models from '../models';
 const router = express.Router();
 
 router.get('/:id', (req, res) => {
-
+    console.log(req.params, 'lololo')
     models.Webcams.findAll({
         where: {
             userID: req.decoded.id,
@@ -13,8 +13,9 @@ router.get('/:id', (req, res) => {
             ]
         }
     }).then(collection => {
+        console.log('collection', )
         res.status(200).send(collection);
-    }).catch( (error) => {
+    }).catch((error) => {
         res.status(200).send({ error: error });
     });
 
@@ -22,54 +23,55 @@ router.get('/:id', (req, res) => {
 
 router.put('/', (req, res) => {
 
+    const request = JSON.parse(JSON.stringify(req.body.body))
+    console.log('request.collectionID', request.collectionID)
     models.Webcams.find({
         where: {
-            webcamID: req.body.webcamID,
+            webcamID: request.webcam.webcamID,
             $and: [
-                { collectionID: req.body.collectionID },
+                { collectionID: request.collectionID },
                 { userID: req.decoded.id }
             ]
         }
-    }).then((webcam) => {
-
+        
+    }).then(webcam => {
+ 
         if (webcam) {
-
             res.status(200).send({ success: false, error: 'Webcam already saved in this collection.' });
-
         } else {
 
             models.Webcams.create({
-                city: req.body.city,
-                country: req.body.country,
-                countryCode: req.body.countryCode,
-                views: req.body.views,
-                lat: req.body.lat,
-                lng: req.body.lng,
-                position: req.body.position,
-                thumbnail: req.body.thumbnail,
-                type: req.body.type,
-                title: req.body.title,
-                link: req.body.link,
-                webcamID: req.body.webcamID,
-                collectionID: req.body.collectionID,
-                userID: req.decoded.user.id
-            }).then(() => {
-
-                res.status(200).send({ success: true, msg: 'New webcam saved.' });
-
-            });
+                city: request.webcam.city,
+                country: request.webcam.country,
+                countryCode: request.webcam.countryCode,
+                views: request.webcam.views,
+                lat: request.webcam.lat,
+                lng: request.webcam.lng,
+                position: request.webcam.position,
+                thumbnail: request.webcam.thumbnail,
+                type: request.webcam.type,
+                title: request.webcam.title,
+                link: request.webcam.link,
+                webcamID: request.webcam.webcamID,
+                collectionID: request.collectionID,
+                userID: req.decoded.id
+            })
+                .then(() => {
+                    res.status(200).send({ success: true, msg: 'New webcam saved.' });
+                });
         }
-    }).catch( (error) => {
+    }).catch(error => {
+        console.log('error', error)
         res.status(200).send({ success: false, error: error });
     });
 });
 
-router.delete('/', (req, res) => {
-
+router.post('/delete/', (req, res) => {
+    const webcam = req.body.params
     models.Webcams.findOne({
         where: {
-            collectionID: req.body.collectionID,
-            id: req.body.id
+            collectionID: webcam.collectionID,
+            webcamID: webcam.webcamID
         }
     }).then(webcam => {
 
@@ -77,7 +79,8 @@ router.delete('/', (req, res) => {
             res.status(200).send({ success: true, msg: 'Webcam deleted!' });
         });
 
-    }).catch( (error) => {
+    }).catch((error) => {
+        console.log('error', error)
         res.status(200).send({ success: false, error: error });
     });
 });

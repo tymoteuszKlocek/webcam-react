@@ -1,19 +1,14 @@
 import * as types from './actionTypes';
 import SessionApi from '../api/sessionApi';
 
-export function loginSuccess(resp) {
-    return { type: types.LOGIN_SUCCESS, payload: resp }
-}
-
-export function loginError() {
-    return { type: types.LOGIN_ERROR }
-}
+// login
 
 export function loginUser(credentials) {
 
     return function (dispatch) {
 
         return SessionApi.login(credentials).then(response => {
+
             if (response.token) {
                 sessionStorage.setItem('token', response.token);
                 dispatch(loginSuccess(response));
@@ -26,13 +21,22 @@ export function loginUser(credentials) {
     };
 }
 
+function loginSuccess(resp) {
+    return { type: types.LOGIN_SUCCESS, payload: resp }
+}
+
+function loginError() {
+    return { type: types.LOGIN_ERROR }
+}
+
+//logout
+
 export function logout() {
 
     return function (dispatch) {
 
         return SessionApi.logout().then(resp => {
-            sessionStorage.setItem('token', '');
-            console.log(resp);
+            sessionStorage.removeItem('token');
             dispatch(logoutSuccess());
         }).catch(error => {
             console.log(error);
@@ -40,6 +44,23 @@ export function logout() {
     }
 }
 
-export function logoutSuccess() {
+function logoutSuccess() {
     return { type: types.LOGOUT_SUCCESS }
 }
+
+// function logoutError() {
+//     return { type: types.LOGOUT_ERROR }
+// }
+
+export function registerUser(credentials) {
+    
+        return function (dispatch) {
+    
+            return SessionApi.register(credentials).then(resp => {
+                console.log('register done', resp)
+                //dispatch(registerSuccess());
+            }).catch(error => {
+                console.log(error);
+            })
+        }
+    }

@@ -3,7 +3,6 @@ import express from 'express';
 import http from 'http';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
-import session from 'express-session';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
 import * as fs from 'fs';
@@ -19,13 +18,13 @@ const configJson = fs.readFileSync('./config/config.json');
 const config = JSON.parse(configJson);
 
 const app = express();
-const port = normalizePort( '3030');
+const port = normalizePort('3030');
 
 // CORS
-const allowCrossDomain = (req,res,next) => {
+const allowCrossDomain = (req, res, next) => {
     let allowedHost = [config.cors.origin];
 
-    if(allowedHost.indexOf(req.headers.origin) !== 1) {
+    if (allowedHost.indexOf(req.headers.origin) !== 1) {
         res.header('Access-Control-Allow-Credentials', true);
         res.header('Access-Control-Allow-Origin', config.cors.origin);
         res.header('Access-Control-Allow-Methods', 'POST,GET,PUT,DELETE,OPTIONS');
@@ -39,9 +38,9 @@ const allowCrossDomain = (req,res,next) => {
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(allowCrossDomain);
 app.use(expressValidator());
 app.use(cookieParser());
-app.use(allowCrossDomain);
 // session
 //app.use(session(config.sess));
 
@@ -58,7 +57,7 @@ let server = http.createServer(app);
 server.listen(port);
 
 // sequelize sync
-models.sequelize.sync().then( () => {
+models.sequelize.sync().then(() => {
     server.listen(port);
 });
 
@@ -77,7 +76,7 @@ function normalizePort(val) {
 }
 
 // catch 404 and forward to error handler
-app.use( (req, res) => {
+app.use((req, res) => {
     let err = new Error('Not Found');
     err.status = 404;
     res.status(err.status || 500).send();

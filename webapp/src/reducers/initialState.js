@@ -1,4 +1,4 @@
-export default {
+ const initialState = {
     // for webcams from outer API (webcams.travel.com)
     webcams: [],
     // requests for webcams saved on our backend 
@@ -9,3 +9,4 @@ export default {
     galleries: [],
     position: ''
 }
+export default initialState;

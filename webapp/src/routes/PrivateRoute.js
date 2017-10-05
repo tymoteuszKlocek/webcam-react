@@ -16,11 +16,9 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 )
 
 function requireAuth() {
-    //TODO can I use this like that?
-    let state = store.getState();
 
-    if ((!!state.session.token && state.session.token !== '') || sessionStorage.getItem('token') !== '') {
-        console.log('auth ok');
+    if (!!sessionStorage.getItem('token') && sessionStorage.getItem('token') !== undefined) {
+        console.log('Authorisation ok');
         return true;
     } else {
         console.log('no Authorisation!');
