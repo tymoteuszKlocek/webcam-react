@@ -1,12 +1,22 @@
- const initialState = {
-    // for webcams from outer API (webcams.travel.com)
+// @flow
+type State = {
+    +webcams: Array<Object>,
+    +savedWebcams: Array<Object>,
+    +session: {
+        token: string
+    },
+    +galleries: Array<Object>,
+    +position: string
+};
+
+const initialState: State = {
     webcams: [],
-    // requests for webcams saved on our backend 
     savedWebcams: [],
     session: {
-        token: sessionStorage.getItem('token') || ''
+        token: sessionStorage.getItem('token') || '',
     },
     galleries: [],
-    position: ''
-}
+    position: '',
+};
+
 export default initialState;

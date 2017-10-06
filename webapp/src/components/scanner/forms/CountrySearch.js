@@ -1,3 +1,4 @@
+//@flow
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import {getSuggestions, getSuggestionValue, renderSuggestion} from './autosuggest.js';

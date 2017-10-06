@@ -1,14 +1,17 @@
+//@flow
 import WebcamApi from '../api/webcamApi';
 import * as types from './actionTypes';
+
+type Action = Object;
+type Dispatch = (action: Action | Promise<Action>) => Promise<any>;
 
 // for API from webcams.travel.com
 function fetchWebcamSuccess(resp) {
     return { type: types.FETCH_WEBCAMS_SUCCESS, payload: resp }
 }
 
-export function fetchWebcams(url) {
-
-    return function (dispatch) {
+export function fetchWebcams(url: string) {
+    return function (dispatch: Dispatch) {
         WebcamApi.fetchNewWebcams(url)
             .then(resp => {
                 dispatch(fetchWebcamSuccess(resp));
@@ -20,14 +23,14 @@ export function fetchWebcams(url) {
 }
 
 // hide webcam fetched from webcam.travel.com
-export function hideWebcam(id) {
-    return (dispatch) => {
+export function hideWebcam(id: string) {
+    return (dispatch: Dispatch) => {
         dispatch({ type: types.HIDE_WEBCAM, payload: id })
     }
 }
 
 // save webcam fetched from webcam.travel.com
-export function saveWebcam(galleryId, webcam) {
+export function saveWebcam(galleryId: string, webcam: string) {
     WebcamApi.saveWebcam(galleryId, webcam)
         .then(() => {
             uploadWebcams(galleryId);
@@ -35,12 +38,12 @@ export function saveWebcam(galleryId, webcam) {
 }
 
 // for my API (saved on backend in gallery table)
-function fetchSavedWebcamSuccess(resp) {
+function fetchSavedWebcamSuccess(resp: Object): Action {
     return { type: types.FETCH_SAVED_WEBCAMS_SUCCESS, payload: resp }
 }
 
-export function uploadWebcams(galleryID) {
-    return (dispatch) => {
+export function uploadWebcams(galleryID: string): Action {
+    return (dispatch: Dispatch) => {
         WebcamApi.fetchSavedWebcams(galleryID)
             .then(resp => {
                 dispatch(fetchSavedWebcamSuccess(resp));
@@ -52,11 +55,11 @@ export function uploadWebcams(galleryID) {
 }
 
 // delete webcam on our database (webcams table)
-export function deleteWebcam(webcam) {
+export function deleteWebcam(webcam: Object): Action {
 
-    const collectionID = webcam.collectionID;
+    const collectionID: string = webcam.collectionID;
 
-    return (dispatch) => {
+    return (dispatch: Dispatch) => {
         WebcamApi.deleteWebcam(webcam)
             .then((resp) => {
                 if (resp.success) {

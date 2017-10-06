@@ -1,12 +1,19 @@
+//@flow
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-class Gallery extends React.Component {
-    onClick(id) {
-        this.props.onClick(id)
+type Props = {
+    onClick: (id: string) => void,
+    onDelete: (id: string) => void,
+    gallery: Object,
+}
+
+class Gallery extends React.Component<Props> {
+    onClick(id: string) {
+        this.props.onClick(id);
     }
 
-    onDelete(id) {
+    onDelete(id: string) {
         this.props.onDelete(id);
     }
 
@@ -20,18 +27,18 @@ class Gallery extends React.Component {
                         {gallery.title}
                     </li>
                 </button>
-            )
+            );
         } else {
             return (
-                <Link to={"/dashboard/" + gallery.id}>
-                    <div className="list-group-item">
-                        <li onClick={() => this.onClick(gallery.id)} >
+                <div className="list-group-item">
+                    <li onClick={() => this.onClick(gallery.id)} >
+                        <Link to={'/dashboard/' + gallery.id}>
                             {gallery.title}
-                        <div onClick={() => this.onDelete(gallery.id)} className="btn btn-default btn-sm delete-btn"><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></div>
-                        </li>
-                    </div>
-                </ Link>
-            )
+                        </ Link>
+                        <div onClick={() => this.onDelete(gallery.id)} className="btn btn-default btn-sm delete-btn"><span className="glyphicon glyphicon-remove" aria-hidden="true" /></div>
+                    </li>
+                </div>
+            );
         }
 
     }

@@ -1,46 +1,48 @@
+//@flow
 import GalleryApi from '../api/galleryApi';
 import * as types from './actionTypes';
 
-export function fetchGalleries() {
-    return (dispatch) => {
+type Action = Object;
+type Dispatch = (action: Action | Promise<Action>) => Promise<any>;
+
+export function fetchGalleries(): Action {
+    return (dispatch: Dispatch): Promise<Action> => {
         return GalleryApi.getAllGalleries()
             .then((response, err) => {
                 if (err) {
-                    dispatch(fetchGalleriesError(err))
+                    dispatch(fetchGalleriesError(err));
                 } else {
-                    dispatch(fetchGalleriesSuccess(response))
+                    dispatch(fetchGalleriesSuccess(response));
                 }
             }).catch(error => {
-                fetchGalleriesError(error)
+                fetchGalleriesError(error);
             });
     }
 }
 
-function fetchGalleriesSuccess(resp) {
+function fetchGalleriesSuccess(resp: Object): Action {
     return { type: types.FETCH_GALLERIES_SUCCESS, payload: resp }
 }
 
-function fetchGalleriesError(resp) {
+function fetchGalleriesError(resp: Object): Action {
     return { type: types.FETCH_GALLERIES_ERROR, payload: resp }
 }
 
-export function saveGallery(name) {
-    return (dispatch) => {
+export function saveGallery(name: string): Action {
+    return (dispatch: Dispatch) => {
         return GalleryApi.saveGallery(name)
-        .then(resp => {
-            console.log(resp);
-            dispatch(fetchGalleries())
-        });
+            .then(resp => {
+                dispatch(fetchGalleries());
+            });
     }
 }
 
-export function deleteGallery(id) {
-    return (dispatch) => {
+export function deleteGallery(id: string): Action {
+    return (dispatch: Dispatch) => {
         return GalleryApi.deleteGallery(id)
-        .then(resp => {
-            console.log(resp);
-            dispatch(fetchGalleries())
-        });
+            .then(resp => {
+                dispatch(fetchGalleries());
+            });
     }
 }
 

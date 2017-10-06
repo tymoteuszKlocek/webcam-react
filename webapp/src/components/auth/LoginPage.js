@@ -1,26 +1,36 @@
+// @flow
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import * as sessionActions from '../../actions/sessionActions';
 
-class LoginPage extends React.Component {
-    constructor(props) {
+type Props = { /* ... */ }; // issue: what to put here TODO
+type State = {
+    credentials: {
+        username: string,
+        password: string,
+    },
+    redirect: boolean,
+}
+
+class LoginPage extends React.Component<Props, State> {
+    constructor(props: Props) {
         super(props);
 
         this.state = {
             credentials: {
                 username: '',
-                password: ''
+                password: '',
             },
-            redirect: false
+            redirect: false,
         };
 
     }
 
-    onChange(event) {
-        const field = event.target.name;
-        const credentials = this.state.credentials;
+    onChange(event: SyntheticEvent<HTMLButtonElement>) {
+        const field: string = event.target.name;
+        const credentials: Object = this.state.credentials;
         credentials[field] = event.target.value;
         return this.setState({ credentials: credentials });
     }
@@ -48,13 +58,13 @@ class LoginPage extends React.Component {
                     <div className="form-group">
                         <label htmlFor="username">
                             Username:
-                        <input name="username" type="text" className="form-control" onChange={(e) => { this.onChange(e) }} required/>
+                        <input name="username" type="text" className="form-control" onChange={(e) => { this.onChange(e) }} required />
                         </label>
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">
                             Password:
-                        <input name="password" type="password" className="form-control" onChange={(e) => { this.onChange(e) }} required/>
+                        <input name="password" type="password" className="form-control" onChange={(e) => { this.onChange(e) }} required />
                         </label>
                     </div>
                     <input type="button" name="submit-login" onClick={() => this.onSubmit()} className="btn btn-primary login-btn" placeholder="Create new account" value="Submit" />
@@ -66,9 +76,9 @@ class LoginPage extends React.Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: Object): Object {
     return {
-        actions: bindActionCreators(sessionActions, dispatch)
+        actions: bindActionCreators(sessionActions, dispatch),
     };
 }
 

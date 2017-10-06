@@ -1,8 +1,14 @@
-import React from 'react';
+//@flow
+import * as React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import store from '../store/store';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+//TODO check this and fix:
+type Props = {
+    component: React.ComponentType<Props>,
+};
+
+const PrivateRoute = ({ component: Component, ...rest }: Props) => (
     <Route {...rest} render={props => (
         requireAuth() ? (
             <Component {...props} />

@@ -4,14 +4,32 @@ import Webcam from './Webcam';
 
 type Props = {
     type: string,
-    param: Object,
-    webcams: Array<Object>, //TODO - is this type ok?
-    onSave: () => void,
-    onDelete: () => void
+    param?: Object,
+    webcams?: Array<Object>,
+    galleries: Array<Object>,
+    onSave?: (id: string, webcam: WebcamType) => void,
+    onDelete: (webcam: Object) => void,
+    hideWebcam?: (webcamID: string) => void,
 }
 
-class WebcamList extends React.Component {
-    onSave(id, webcam) {
+type WebcamType = {
+    webcamID?: string,
+    city?: string,
+    country?: string,
+    countryCode?: string,
+    views?: string,
+    lat?: string,
+    lng?: string,
+    position?: string,
+    thumbnail?: string,
+    title?: string,
+    link?: string,
+    type?: string,
+    showWebcam?: string
+}
+
+class WebcamList extends React.Component<Props, WebcamType> {
+    onSave(id: string, webcam: WebcamType) {
         this.props.onSave(id, webcam)
     }
 
@@ -21,7 +39,7 @@ class WebcamList extends React.Component {
             return (
                 <div>
                     {
-                        this.props.webcams.map(webcam => {
+                        this.props.webcams.map((webcam) => {
                             return (
                                 <Webcam
                                     key={webcam.webcamID}

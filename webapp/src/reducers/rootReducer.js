@@ -1,3 +1,4 @@
+//@flow
 import { combineReducers } from 'redux';
 
 import webcams from './webcamsReducer';
@@ -11,7 +12,7 @@ const rootReducer = combineReducers({
     session,
     galleries,
     position,
-    savedWebcams
-})
+    savedWebcams,
+});
 
 export default rootReducer;  

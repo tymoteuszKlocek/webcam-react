@@ -1,34 +1,51 @@
+//@flow
 import conf from '../common/config/conf';
 import axios from 'axios';
+
+type Webcam = {
+    webcamID: string,
+    city: string,
+    country: string,
+    countryCode: string,
+    views: string,
+    lat: string,
+    lng: string,
+    position: string,
+    thumbnail: string,
+    title: string,
+    link: string,
+    type: string,
+    showWebcam: string
+}
 
 export default class WebcamApi {
 
     static newWebcamsRequestHeaders() {
         return {
-            'X-Mashape-Authorization': conf.webcamSearch.API_KEY
-        }
+            'X-Mashape-Authorization': conf.webcamSearch.API_KEY,
+        };
     }
 
     static myWebcamsRequestHeaders() {
         let token = sessionStorage.getItem('token');
         return {
             'content-type': 'application/json',
-            'Authorisation': `${token}`
-        }
+            'Authorisation': `${token}`,
+        };
     }
 
-    static fetchNewWebcams(params) {
+    static fetchNewWebcams(params: string) {
 
-        const url = conf.webcamSearch.SRC + params
+        const url = conf.webcamSearch.SRC + params;
         return axios.get(url, {
-            headers: this.newWebcamsRequestHeaders()
+            headers: this.newWebcamsRequestHeaders(),
         })
             .then(resp => {
                 let data = resp.data.result.webcams;
-                let webcams = [];
+                let webcams: Array<Object> = [];
 
                 data.forEach((cam) => {
-                    let webcam = {
+                    let webcam: Webcam = {
                         webcamID: cam.id,
                         city: cam.location.city,
                         country: cam.location.country,
@@ -41,8 +58,8 @@ export default class WebcamApi {
                         title: cam.title,
                         link: cam.url.current.desktop,
                         type: 'scanner',
-                        showWebcam: 'thumbnail show'
-                    }
+                        showWebcam: 'thumbnail show',
+                    };
                     webcams.push(webcam);
                 });
                 return webcams;
@@ -58,11 +75,11 @@ export default class WebcamApi {
         const headers = this.myWebcamsRequestHeaders();
         const request = new Request(url, {
             method: 'GET',
-            headers: headers
+            headers: headers,
         });
 
         return axios.get(url, {
-            headers: headers
+            headers: headers,
         })
             .then(resp => {
                 return resp.data;
@@ -77,7 +94,7 @@ export default class WebcamApi {
         const headers = this.myWebcamsRequestHeaders();
         const requestObj = {
             webcam: webcam,
-            collectionID: galleryId
+            collectionID: galleryId,
         };
 
         return axios.put(url, {
@@ -96,14 +113,14 @@ export default class WebcamApi {
         const headers = this.myWebcamsRequestHeaders();
         const requestObj = {
             webcamID: webcam.webcamID,
-            collectionID: webcam.collectionID /// you should send id (but u nedd two ids)
+            collectionID: webcam.collectionID, /// you should send id (but u nedd two ids)
         };
 
         return axios.post(url, {
             headers: headers,
-            params: requestObj
+            params: requestObj,
         }).then(resp => {
-            console.log('deleted', resp)
+            console.log('deleted', resp);
             if (resp.data.success === true) {
                 return resp.data;
             }
@@ -113,6 +130,6 @@ export default class WebcamApi {
     }
 }
 
-export function parseJSON(response) {
+export function parseJSON(response: Object) {
     return response.json();
 }

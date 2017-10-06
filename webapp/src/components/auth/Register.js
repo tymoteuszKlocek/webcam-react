@@ -1,10 +1,22 @@
+//@flow
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as sessionActions from '../../actions/sessionActions';
 
-class Register extends React.Component {
+type Props = { /* ... */ }; // issue: what to put here
+type State = {
+    credentials: {
+        username: string,
+        password: string,
+        confirmpassword: string,
+        email: string,
+    },
+    redirect: boolean,
+}
+
+class Register extends React.Component<{}, State> {
     constructor(props) {
         super(props);
 
@@ -13,16 +25,15 @@ class Register extends React.Component {
                 username: '',
                 password: '',
                 confirmpassword: '',
-                email: ''
+                email: '',
             },
-            redirect: false
+            redirect: false,
         };
-
     }
 
-    onChange(event) {
-        const field = event.target.name;
-        const credentials = this.state.credentials;
+    onChange(event: SyntheticEvent<HTMLButtonElement>) {
+        const field: string = event.target.name;
+        const credentials: Object = this.state.credentials;
         credentials[field] = event.target.value;
         this.setState({ credentials: credentials });
     }
@@ -59,13 +70,13 @@ class Register extends React.Component {
                     <div className="form-group">
                         <label htmlFor="new-username">
                             Username:
-                                <input name="username" type="text" className="form-control" onChange={(e) => { this.onChange(e) }} required/>
+                                <input name="username" type="text" className="form-control" onChange={(e) => { this.onChange(e) }} required />
                         </label>
                     </div>
                     <div className="form-group">
                         <label htmlFor="new-password">
                             Password:
-                                <input name="password" type="password" className="form-control" onChange={(e) => { this.onChange(e) }} required/>
+                                <input name="password" type="password" className="form-control" onChange={(e) => { this.onChange(e) }} required />
                         </label>
                     </div>
                     <div className="form-group">
@@ -82,9 +93,9 @@ class Register extends React.Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: Object): Object {
     return {
-        actions: bindActionCreators(sessionActions, dispatch)
+        actions: bindActionCreators(sessionActions, dispatch),
     };
 }
 

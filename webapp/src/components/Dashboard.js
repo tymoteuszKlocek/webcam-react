@@ -1,3 +1,4 @@
+//@flow
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchGalleries } from '../actions/galleryActions';
@@ -5,7 +6,21 @@ import { uploadWebcams, deleteWebcam } from '../actions/webcamActions';
 import GalleryList from './GalleryList';
 import WebcamList from './WebcamList';
 
-class Dashboard extends React.Component {
+type Props = {
+    fetchGalleries: () => void,
+    uploadWebcams: (id: string) => void,
+    deleteWebcam: (webcam: Object) => void,
+    galleries: Array<Object>,
+    savedWebcams: Array<Object>,
+}
+
+type Store = {
+    galleries: Array<Object>,
+    position: string,
+    savedWebcams: Array<Object>,
+}
+
+class Dashboard extends React.Component<Props> {
 
     componentWillMount() {
         this.props.fetchGalleries();
@@ -20,7 +35,6 @@ class Dashboard extends React.Component {
     }
 
     render() {
-    
         return (
             <div className="container">
                 <h3>List of your Galleries</h3>
@@ -41,12 +55,11 @@ class Dashboard extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: Store) => {
     return {
-        user: state.user,
         galleries: state.galleries,
         position: state.position,
-        savedWebcams: state.savedWebcams
+        savedWebcams: state.savedWebcams,
     };
 };
 
@@ -60,7 +73,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         deleteWebcam: (webcam) => {
             dispatch(deleteWebcam(webcam));
-        }
+        },
     };
 };
 

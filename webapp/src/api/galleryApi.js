@@ -7,7 +7,7 @@ class GalleryApi {
         let token = sessionStorage.getItem('token');
         return {
             'content-type': 'application/json',
-            'Authorisation': `${token}`
+            'Authorisation': `${token}`,
         }
     }
 
@@ -18,9 +18,7 @@ class GalleryApi {
         const token = sessionStorage.getItem('token');
 
         return axios.get(url, {
-            headers: {
-                'Authorisation': `Bearer ${token}`
-            },
+            headers: headers,
             withCredentials: true,
         }).then(response => {
             return response.data;
@@ -36,7 +34,7 @@ class GalleryApi {
         return axios.put(url, {
             headers: headers,
             withCredentials: true,
-            body: { name: name }
+            body: { name: name },
         }).then(resp => {
             return resp;
         }).catch(err => {
@@ -51,7 +49,7 @@ class GalleryApi {
         return axios.delete(url, {
             headers: headers,
             withCredentials: true,
-            params: { id: id }
+            params: { id: id },
         }).then(resp => {
             return resp;
         }).catch(err => {

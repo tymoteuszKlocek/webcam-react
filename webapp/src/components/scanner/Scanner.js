@@ -13,44 +13,55 @@ import TagSearch from './forms/TagSearch';
 import NearBySearch from './forms/NearBySearch';
 // TODO import PositionSearch from './forms/PositionSearch';
 
-class Scanner extends React.Component {
+type Props = {
+    galleries: Array<Object>,
+    position: string,
+    webcams: Array<Object>,
+    hideWebcam: (id: string) => void,
+    setPosition: () => void,
+    fetchGalleries: () => void,
+    fetchWebcams: (url: string) => void,
+    searchNearWebcams: () => void,
+    saveWebcam: (galleryId: string, webcam: string) => void;
+}
+
+class Scanner extends React.Component<Props, {}> {
 
     componentWillMount() {
         this.props.setPosition();
         this.props.fetchGalleries();
     }
-
     searchNearWebcams() {
-        let url = conf.webcamSearch.NEAR + this.props.position.position + ',' + conf.webcamSearch.RANGE + conf.webcamSearch.PARAMS;
+        let url = conf.webcamSearch.NEAR + this.props.position + ',' + conf.webcamSearch.RANGE + conf.webcamSearch.PARAMS;
         this.searchRequest(url);
         console.log(url)
     }
 
-    searchWebcamsByTag(category, query) {
-        let url = category + query + conf.webcamSearch.PARAMS;
-        this.searchRequest(url);
-        console.log(url)
-    }
-
-    searchWebcamsByCountry(category, query) {
+    searchWebcamsByTag(category: string, query: string) {
         let url = category + query + conf.webcamSearch.PARAMS;
         this.searchRequest(url);
     }
 
-    searchRequest(url) {
+    searchWebcamsByCountry(category: string, query: string) {
+        let url = category + query + conf.webcamSearch.PARAMS;
+        this.searchRequest(url);
+    }
+
+    searchRequest(url: string) {
         this.props.fetchWebcams(url)
     }
 
-    saveWebcam(galleryId, webcam) {
+    saveWebcam(galleryId: string, webcam: string) {
         this.props.saveWebcam(galleryId, webcam);
     }
 
-    hideWebcam(id) {
-        console.log('hideWebcam', id);
+    hideWebcam(id: string) {
         this.props.hideWebcam(id);
     }
 
     render() {
+        console.log('sac', this.props.position)
+
         return (
             <div className="container">
                 <h3>Scanner is a tool which lets you search for webcams all around the world.</h3>
@@ -80,13 +91,13 @@ const mapStateToProps = (state) => {
         session: state.session,
         webcams: state.webcams,
         position: state.position,
-        galleries: state.galleries
+        galleries: state.galleries,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchWebcams: (url) => {
+        fetchWebcams: (url: string) => {
             dispatch(fetchWebcams(url));
         },
         fetchGalleries: () => {
@@ -98,12 +109,12 @@ const mapDispatchToProps = (dispatch) => {
         getPosition: () => {
             dispatch(getPosition());
         },
-        hideWebcam: (id) => {
+        hideWebcam: (id: string) => {
             dispatch(hideWebcam(id));
         },
-        saveWebcam: (galleryId, webcam) => {
+        saveWebcam: (galleryId: string, webcam: string) => {
             saveWebcam(galleryId, webcam);
-        }
+        },
     };
 };
 

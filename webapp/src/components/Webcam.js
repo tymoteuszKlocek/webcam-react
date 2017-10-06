@@ -1,23 +1,56 @@
+//@flow
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import GalleryList from './GalleryList';
 
-class Webcam extends React.Component {
-    constructor(props) {
+type State = {
+    showHideGalleryList: string,
+}
+
+type Props = {
+    onSave?: (id: string) => void,
+    hideWebcam?: () => void,
+    onDelete?: () => void,
+    showWebcam?: string,
+    webcam: WebcamType,
+    galleries: [Object],
+    type: string,
+    showHideGalleryList: string,
+    key: any
+}
+
+type WebcamType = {
+    webcamID?: string,
+    city?: string,
+    country?: string,
+    countryCode?: string,
+    views?: string,
+    lat?: string,
+    lng?: string,
+    position?: string,
+    thumbnail?: string,
+    title?: string,
+    link?: string,
+    type?: string,
+    showWebcam?: string
+}
+
+class Webcam extends React.Component<Props, State> {
+    constructor(props: Props) {
         super(props);
         this.state = {
             showHideGalleryList: 'hide',
-        }
+        };
     }
 
-    onSave(id) {
+    onSave(id: string) {
         this.props.onSave(id);
         this.toggleGalleryList();
     }
 
     toggleGalleryList() {
         let toggle = (this.state.showHideGalleryList === 'hide') ? 'show' : 'hide';
-        this.setState({ 'showHideGalleryList': toggle })
+        this.setState({ 'showHideGalleryList': toggle });
     }
 
     render() {
@@ -72,24 +105,25 @@ class Webcam extends React.Component {
                                 <GalleryList
                                     type={this.props.type}
                                     galleries={this.props.galleries}
-                                    onClick={(galleryId) => this.onSave(galleryId)} />
+                                    onClick={(galleryId) => this.onSave(galleryId)}
+                                />
                             </div>
 
                         </li>
 
                         <div className="well">
                             <div>
-                                <Link to={"/map/" + this.props.webcam.lat + ',' + this.props.webcam.lng}>Map</Link>
+                                <Link to={'/map/' + this.props.webcam.lat + ',' + this.props.webcam.lng}>Map</Link>
                             </div>
                             <div>
-                                <Link to={"/scanner/" + this.props.webcam.country}>More from this country</Link>
+                                <Link to={'/scanner/' + this.props.webcam.country}>More from this country</Link>
                             </div>
                         </div>
 
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
 

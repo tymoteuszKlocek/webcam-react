@@ -1,10 +1,21 @@
+//@flow
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { logout } from '../actions/sessionActions';
 import { connect } from 'react-redux';
 import { setPosition, getPosition } from '../actions/positionActions';
 
-class Navigation extends React.Component {
+type State = {
+    position: string
+}
+
+type Props = {
+    setPosition: () => void,
+    logout: () => void,
+    position: string,
+}
+
+class Navigation extends React.Component<Props, {}> {
 
     componentWillMount() {
         this.props.setPosition();
@@ -25,7 +36,7 @@ class Navigation extends React.Component {
                         <Link to="/scanner">Scanner</Link>
                     </li>
                     <li role="presentation">
-                        <Link to={"/map/" + this.props.position.position}>Map</Link>
+                        <Link to={'/map/' + this.props.position}>Map</Link>
                     </li>
                     <li role="presentation" onClick={() => this.logout()}>
                         <Link to="/">Logout</Link>
@@ -36,23 +47,20 @@ class Navigation extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: State) => {
     return {
         position: state.position,
     };
 };
-
-const mapDispatchToProps = (dispatch) => {
+//TODO Flow
+const mapDispatchToProps = (dispatch: () => void) => {
     return {
         setPosition: () => {
             dispatch(setPosition());
         },
-        getPosition: () => {
-            dispatch(getPosition());
-        },
         logout: () => {
             dispatch(logout());
-        }
+        },
     };
 };
 

@@ -1,21 +1,30 @@
+//@flow
 import React from 'react';
 
-class GalleryForm extends React.Component {
-    constructor(props) {
+type State = {
+    name: string,
+}
+
+type Props = {
+    onClick: (name: string) => void,
+}
+
+class GalleryForm extends React.Component<Props, State> {
+    constructor(props: Props) {
         super(props);
         this.state = {
-            name: ''
+            name: '',
         }
     }
 
     onClick() {
         const name = this.state.name;
-        this.props.onClick(name)
+        this.props.onClick(name);
     }
 
-    onChange(e) {
-        this.setState({ 'name': e.target.value })
-        console.log(this.state.name)
+    onChange(e: SyntheticEvent<HTMLButtonElement>) {
+        let val: string = e.target.value;
+        this.setState({ 'name': val });
     }
 
     render() {
