@@ -1,5 +1,5 @@
 {
-    "extends": ["eslint:recommended", "plugin:react/recommended"],
+    "extends": ["defaults/rules/eslint/errors/airbnb", "plugin:react/recommended"],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -8,6 +8,7 @@
     "rules": {
         "react/jsx-uses-react": "error",
         "react/jsx-uses-vars": "error",
-        "react/prop-types": 0
+        "react/prop-types": 0,
+        "javascript.validate.enable": 0
     }
 }

@@ -1,22 +1,44 @@
+//@flow
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { logout } from '../actions/sessionActions';
+import { connect } from 'react-redux';
+import { setPosition } from '../actions/positionActions';
 
-class Navigation extends React.Component {
+type State = {
+    position: string
+}
+
+type Props = {
+    position: string,
+    setPosition: () => void,
+    logout: () => void,
+}
+
+class Navigation extends React.Component<Props, {}> {
+    componentWillMount() {
+        this.props.setPosition();
+    }
+
+    logout() {
+        this.props.logout();
+    }
+
     render() {
         return (
             <div className="container">
-                <ul className="nav nav-tabs">
+                <ul className="nav nav-tabs ">
                     <li role="presentation">
-                        <Link to="/dashboard">Dashboard</Link>
+                        <Link to="/dashboard/0">Dashboard</Link>
                     </li>
                     <li role="presentation">
-                        <Link to="/scanner">Scanner</Link>
+                        <Link to="/scanner/0">Scanner</Link>
                     </li>
                     <li role="presentation">
-                        <Link to="/map">Map</Link>
+                        <Link to={'/map/0' + this.props.position}>Map</Link>
                     </li>
-                    <li role="presentation">
-                        <Link to="/logout">Logout</Link>
+                    <li role="presentation" onClick={() => this.logout()}>
+                        <Link to="/">Logout</Link>
                     </li>
                 </ul>
             </div>
@@ -24,4 +46,21 @@ class Navigation extends React.Component {
     }
 }
 
-export default Navigation;
+const mapStateToProps = (state: State) => {
+    return {
+        position: state.position,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setPosition: () => {
+            dispatch(setPosition());
+        },
+        logout: () => {
+            dispatch(logout());
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

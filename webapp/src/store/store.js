@@ -1,13 +1,24 @@
 import { createStore, applyMiddleware } from 'redux';
 import rootReducer from '../reducers/rootReducer';
 import ReduxThunk from 'redux-thunk';
-import logger from 'redux-logger'
+import logger from 'redux-logger';
+import { loadState, saveState } from './localStorage';
+import { throttle } from 'lodash';
 
-const midd = (store) => (next) => (action) => {
-    console.log('store:', store.getState());
-    next(action);
-};
+const persistedState: Object = loadState();
 
-const middleware = applyMiddleware(midd, ReduxThunk, logger);
+const middleware = applyMiddleware(ReduxThunk, logger);
 
-export default createStore(rootReducer, middleware);
+const store: Object = createStore(rootReducer, persistedState, middleware);
+
+store.subscribe(throttle(() => {
+    saveState({
+        galleryWebcams: store.getState().galleryWebcams,
+        webcams: store.getState().webcams,
+        session: store.getState().session,
+        galleries: store.getState().galleries,
+        position: store.getState().position,
+    });
+}, 1000))
+
+export default store;

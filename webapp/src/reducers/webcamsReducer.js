@@ -1,31 +1,38 @@
+//@flow
 import * as types from '../actions/actionTypes';
 import initialState from './initialState';
 
-export default function webcamsReducer(state = initialState.webcams, action) {
+type State = {
+    collection: Array<Object>
+};
+
+type HideWebcamAction = { type: 'HIDE_WEBCAM', payload: Object };
+type FetchAction = { type: 'FETCH_WEBCAMS_SUCCESS', payload: Object };
+
+type Action = HideWebcamAction | FetchAction;
+
+//  webcam reducer is for managing webcams from webcam.travel.com (opposite to galleryWebcams reducer wich manages webcams from db)
+export default function webcamsReducer(state: State = initialState.webcams, action: Action) {
+
     switch (action.type) {
-        case types.SAVE_WEBCAM: {
-            state = { ...state, webcams: action.payload };
-            console.log('save webcams', state)
-            break;
+        case types.HIDE_WEBCAM: {
+            let deletedWebcamId: Object = action.payload;
+            let newCollection = [];
+            state.collection.map((webcam) => {
+                if (webcam.webcamID !== deletedWebcamId) {
+                    newCollection.push(webcam)
+                }
+            });
+            return { ...state, collection: newCollection };
         }
-        // TODO: I don't want to store every response, just last one to display it
-        case types.DISPLAY_WEBCAMS: {
-            state = action.payload;
-            break;
+        case types.FETCH_WEBCAMS_SUCCESS: {
+            return { ...state, collection: action.payload };
         }
-        case types.DELETE_WEBCAM: {
-            state = state.filter((webcam) => webcam.webcamID !== action.payload);
-            break;
-        }
-        case types.FETCH_WEBCAMS: {
-            console.log('fetch webcams in reducer')
-            //TODO put this in SAVE_WEBCAMS and test
-            state = { ...state, webcams: action.payload };
-            break;
+        case types.FETCH_WEBCAMS_ERROR: {
+            return { ...state, error: action.payload };
         }
         default: {
             return state;
         }
     }
-    return state;
-};
+}

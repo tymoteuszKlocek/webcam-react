@@ -23,15 +23,20 @@
         "ZOOM": "&zoom=18",
         "SRC": "https://www.google.com/maps/embed/v1/",
         "TYPE": "&maptype=satellite",
-        "POS": "51.23776,22.52807"
+        "POS": "51.23776,22.52807",
+        "COUNTRY": "Poland"
     },
     "req": {
         "apiUrl": "http://127.0.0.1:3030",
         "webcamcollections": "/webcamcollections",
-        "webcams":  "/webcams",
+        "webcams":  "/webcams/",
         "login": "/login",
         "register": "/register",
         "refresh" : "/refresh",
         "logout": "/logout"
+    },
+    "register": {
+        "usernNameMinLength": "2",
+        "passwordMinLength": "4"
     }
 }

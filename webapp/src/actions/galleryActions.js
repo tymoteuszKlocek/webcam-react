@@ -1,42 +1,51 @@
-import SessionApi from '../api/sessionApi';
-import conf from '../common/config/conf.json';
+//@flow
+import GalleryApi from '../api/galleryApi';
+import * as types from './actionTypes';
 
-export function fetchGalleries() {
+type Action = Object;
+type Dispatch = (action: Action | Promise<Action>) => Promise<any>;
 
-    return (dispatch) => {
+export function fetchGalleries(): Action {
+    return (dispatch: Dispatch): Promise<Action> => {
 
-        let url = conf.req.apiUrl + conf.req.webcamcollections;
-
-        let params = {
-            url: url,
-            method: 'GET'
-        }
-        console.log('gall act', params);
-        return SessionApi.loadData(params).then(response => {
-            console.log(response)
-            return response;
-        }).catch(error => {
-            throw (error);
-        });
-        // return function (dispatch) {
-        //     console.log(123123)
-        //     return SessionApi.loadData(params).then(response => {
-        //         console.log(response)
-        //         return response;
-        //     }).catch(error => {
-        //         throw (error);
-        //     });
-        // };
+        return GalleryApi.getAllGalleries()
+            .then((response, err) => {
+                if (err) {
+                    dispatch(fetchGalleriesError(err));
+                } else {
+                    dispatch(fetchGalleriesSuccess(response));
+                }
+            }).catch(error => {
+                fetchGalleriesError(error);
+            });
     }
 }
 
-export function deleteWebcam(id) {
-
-    return (dispatch) => {
-        dispatch({
-            type: 'DELETE_WEBCAM',
-            payload: id
-        });
-    };
-
+function fetchGalleriesSuccess(resp: Object): Action {
+    return { type: types.FETCH_GALLERIES_SUCCESS, payload: resp }
 }
+
+function fetchGalleriesError(resp: Object): Action {
+    return { type: types.FETCH_GALLERIES_ERROR, payload: resp }
+}
+
+export function saveGallery(name: string): Action {
+    return (dispatch: Dispatch) => {
+
+        return GalleryApi.saveGallery(name)
+            .then(() => {
+                dispatch(fetchGalleries());
+            });
+    }
+}
+
+export function deleteGallery(id: string): Action {
+    return (dispatch: Dispatch) => {
+
+        return GalleryApi.deleteGallery(id)
+            .then(() => {
+                dispatch(fetchGalleries());
+            });
+    }
+}
+

@@ -1,23 +1,27 @@
+//@flow
 import Geolocation from '../common/services/geolocation';
+import * as types from './actionTypes';
 
-export function setPosition() {
+type Action = Object;
+type Dispatch = (action: Action | Promise<Action>) => Promise<any>;
 
-    return (dispatch) => {
+export function setPosition(): Action {
+    return (dispatch: Dispatch) => {
 
-        Geolocation.getLocalisation().then(pos => {
+        Geolocation.getLocalisation().then((pos: string) => {
             dispatch({
-                type: 'SET_POSITION',
-                payload: pos
+                type: types.SET_POSITION,
+                payload: pos,
             });
         });
         
     };
 }
 
-export function getPosition() {
-    return (dispatch) => {
+export function getPosition(): Action {
+    return (dispatch: Dispatch) => {
         dispatch({
-            type: 'GET_POSITION'
+            type: types.GET_POSITION,
         });
     };
 }

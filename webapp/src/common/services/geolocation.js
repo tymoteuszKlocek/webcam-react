@@ -1,6 +1,5 @@
 export default class Geolocation {
 
-    // TODO how to use service in react?
     static getLocalisation() {
         return new Promise(function (resolve, reject) {
             navigator.geolocation.getCurrentPosition(function (response) {

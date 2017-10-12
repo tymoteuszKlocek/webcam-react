@@ -1,10 +1,13 @@
-import React from 'react';
-import {
-    Route,
-    Redirect,
-} from 'react-router-dom';
+//@flow
+import * as React from 'react';
+import { Route, Redirect } from 'react-router-dom';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+type Props = {
+    component: React.ComponentType<Props>,
+    location: string,
+};
+
+const PrivateRoute = ({ component: Component, ...rest }: Props) => (
     <Route {...rest} render={props => (
         requireAuth() ? (
             <Component {...props} />
@@ -12,13 +15,16 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
                 <Redirect to={{
                     pathname: '/login',
                     state: { from: props.location }
-                }} />
+                }}
+                />
             )
-    )} />
+    )}
+    />
 )
 
 function requireAuth() {
-    if (sessionStorage.getItem('token')) {
+
+    if (!!sessionStorage.getItem('token') && sessionStorage.getItem('token') !== undefined) {
         return true;
     } else {
         return false;
