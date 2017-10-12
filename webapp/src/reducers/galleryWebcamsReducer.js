@@ -8,19 +8,17 @@ type FetchAction = { type: 'FETCH_SAVED_WEBCAMS_SUCCESS', payload: Array<Object>
 
 type Action = DeleteAction | FetchAction;
 
-// savedWebcam reducer is for managing webcams on db (opposite to webcams reducer wich manages webcams from webcam.travel.com )
-export default function savedWebcamsReducer(state: State = initialState.savedWebcams, action: Action) {
+// gallerydWebcams reducer is for managing webcams on db (opposite to webcams reducer wich manages webcams from webcam.travel.com )
+export default function galleryWebcamsReducer(state: State = initialState.galleryWebcams, action: Action) {
     switch (action.type) {
-        // Why this doesn't work?
         case types.DELETE_WEBCAM: {
             let deletedWebcamId = action.payload;
-            return state = state.filter((webcam) => {
-                console.log('webcam.webcamID', webcam.webcamID, 'deletedWebcamId', deletedWebcamId)
-                webcam.webcamID !== deletedWebcamId;
+            return state.collection = state.filter((webcam) => {
+                return webcam.webcamID !== deletedWebcamId;
             });
         }
         case types.FETCH_SAVED_WEBCAMS_SUCCESS: {
-            return action.payload;
+            return { ...state, collection: action.payload };
         }
         default: {
             return state;

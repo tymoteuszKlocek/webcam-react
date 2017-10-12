@@ -34,5 +34,9 @@
         "register": "/register",
         "refresh" : "/refresh",
         "logout": "/logout"
+    },
+    "register": {
+        "usernNameMinLength": "2",
+        "passwordMinLength": "4"
     }
 }

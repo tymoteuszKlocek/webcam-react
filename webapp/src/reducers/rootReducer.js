@@ -5,14 +5,17 @@ import webcams from './webcamsReducer';
 import session from './sessionReducer';
 import galleries from './galleriesReducer';
 import position from './positionReducer';
-import savedWebcams from './savedWebcamsReducer';
+import galleryWebcams from './galleryWebcamsReducer';
+//import routes from './routesReducer';
 
 const rootReducer = combineReducers({
     webcams,
     session,
     galleries,
     position,
-    savedWebcams,
+    galleryWebcams,
+    // TODO: ask if routes is good idea
+    // routes,
 });
 
 export default rootReducer;  

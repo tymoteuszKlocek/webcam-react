@@ -11,11 +11,12 @@ type State = {
 };
 
 type Props = {
-    galleries: [Object],
+    galleries: Array<Object>,
+    gallery: Object,
     type: string,
-    saveGallery(name: string): () => void,
-    deleteGallery(id: string): () => void,
-    onClick(id: string): () => void,
+    deleteGallery: (id: string) => void,
+    saveGallery: (name: string) => void,
+    onClick: (id: string) => void,
 };
 
 class GalleryList extends React.Component<Props, State> {
@@ -37,7 +38,7 @@ class GalleryList extends React.Component<Props, State> {
         }
     }
 
-    deleteGallery(id: string) {
+    deleteGallery(id: string): void {
         this.props.deleteGallery(id);
     }
 
@@ -93,7 +94,7 @@ const mapStateToProps = (state) => {
         user: state.user,
         galleries: state.galleries,
         position: state.position,
-        savedWebcams: state.savedWebcams,
+        galleryWebcams: state.galleryWebcams,
     };
 };
 

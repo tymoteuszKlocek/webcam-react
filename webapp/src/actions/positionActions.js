@@ -7,12 +7,14 @@ type Dispatch = (action: Action | Promise<Action>) => Promise<any>;
 
 export function setPosition(): Action {
     return (dispatch: Dispatch) => {
+
         Geolocation.getLocalisation().then((pos: string) => {
             dispatch({
                 type: types.SET_POSITION,
                 payload: pos,
             });
         });
+        
     };
 }
 

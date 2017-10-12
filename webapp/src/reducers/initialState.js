@@ -1,22 +1,40 @@
 // @flow
 type State = {
-    +webcams: Array<Object>,
-    +savedWebcams: Array<Object>,
+    +webcams: {
+        collection: Array<Object>,
+        error: any,
+    },
+    +galleryWebcams: {
+        collection: Array<Object>,
+        error: any,
+    },
     +session: {
-        token: string
+        token: string,
+        error: any,
+        message: string,
     },
     +galleries: Array<Object>,
-    +position: string
+    +position: string,
+    //+routes: string
 };
 
 const initialState: State = {
-    webcams: [],
-    savedWebcams: [],
+    webcams: {
+        collection: [],
+        error: undefined,
+    },
+    galleryWebcams: {
+        collection: [],
+        error: undefined,
+    },
     session: {
         token: sessionStorage.getItem('token') || '',
+        error: undefined,
+        message: '',
     },
     galleries: [],
     position: '',
+    //routes: '',
 };
 
 export default initialState;

@@ -7,6 +7,7 @@ type Dispatch = (action: Action | Promise<Action>) => Promise<any>;
 
 export function fetchGalleries(): Action {
     return (dispatch: Dispatch): Promise<Action> => {
+
         return GalleryApi.getAllGalleries()
             .then((response, err) => {
                 if (err) {
@@ -30,8 +31,9 @@ function fetchGalleriesError(resp: Object): Action {
 
 export function saveGallery(name: string): Action {
     return (dispatch: Dispatch) => {
+
         return GalleryApi.saveGallery(name)
-            .then(resp => {
+            .then(() => {
                 dispatch(fetchGalleries());
             });
     }
@@ -39,8 +41,9 @@ export function saveGallery(name: string): Action {
 
 export function deleteGallery(id: string): Action {
     return (dispatch: Dispatch) => {
+
         return GalleryApi.deleteGallery(id)
-            .then(resp => {
+            .then(() => {
                 dispatch(fetchGalleries());
             });
     }

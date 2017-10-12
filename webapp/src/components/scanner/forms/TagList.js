@@ -9,8 +9,8 @@ type Props = {
 class TagList extends React.Component<Props> {
 
     render() {
- 
-        let category = 'category='
+        let category = 'category=';
+
         return (
             <ul className="breadcrumb">
                 {

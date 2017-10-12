@@ -3,7 +3,11 @@ import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import {getSuggestions, getSuggestionValue, renderSuggestion} from './autosuggest.js';
 
-export default class CountrySearch extends React.Component {
+type State = {
+    value: string,
+    suggestions: Array<string>,
+}
+export default class CountrySearch extends React.Component<{}, State> {
 
     constructor() {
         super();
@@ -12,7 +16,7 @@ export default class CountrySearch extends React.Component {
             suggestions: []
         };
     }
-
+    // methods from Autosuggest lib
     onChange = (event, { newValue }) => {
         this.setState({
             value: newValue

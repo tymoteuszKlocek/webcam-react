@@ -2,22 +2,6 @@
 import conf from '../common/config/conf';
 import axios from 'axios';
 
-type Webcam = {
-    webcamID: string,
-    city: string,
-    country: string,
-    countryCode: string,
-    views: string,
-    lat: string,
-    lng: string,
-    position: string,
-    thumbnail: string,
-    title: string,
-    link: string,
-    type: string,
-    showWebcam: string
-}
-
 export default class WebcamApi {
 
     static newWebcamsRequestHeaders() {
@@ -27,7 +11,7 @@ export default class WebcamApi {
     }
 
     static myWebcamsRequestHeaders() {
-        let token = sessionStorage.getItem('token');
+        const token: string = sessionStorage.getItem('token');
         return {
             'content-type': 'application/json',
             'Authorisation': `${token}`,
@@ -37,58 +21,35 @@ export default class WebcamApi {
     static fetchNewWebcams(params: string) {
 
         const url = conf.webcamSearch.SRC + params;
-        return axios.get(url, {
+
+        return axios({
+            method: 'get',
+            url: url,
             headers: this.newWebcamsRequestHeaders(),
-        })
-            .then(resp => {
-                let data = resp.data.result.webcams;
-                let webcams: Array<Object> = [];
-
-                data.forEach((cam) => {
-                    let webcam: Webcam = {
-                        webcamID: cam.id,
-                        city: cam.location.city,
-                        country: cam.location.country,
-                        countryCode: cam.location.country_code,
-                        views: cam.statistics.views,
-                        lat: cam.location.latitude,
-                        lng: cam.location.longitude,
-                        position: cam.location.latitude.toFixed(3) + ',' + cam.location.longitude.toFixed(3),
-                        thumbnail: cam.image.current.preview,
-                        title: cam.title,
-                        link: cam.url.current.desktop,
-                        type: 'scanner',
-                        showWebcam: 'thumbnail show',
-                    };
-                    webcams.push(webcam);
-                });
-                return webcams;
-
-            }).catch(error => {
-                return error;
-            });
+        }).then(resp => {
+            return resp;
+        }).catch(error => {
+            return error;
+        });
     }
 
-    static fetchSavedWebcams(id) {
+    static fetchgalleryWebcams(id: string) {
 
         const url = conf.req.apiUrl + conf.req.webcams + id;
         const headers = this.myWebcamsRequestHeaders();
-        const request = new Request(url, {
-            method: 'GET',
-            headers: headers,
-        });
 
-        return axios.get(url, {
+        return axios({
+            method: 'get',
+            url: url,
             headers: headers,
-        })
-            .then(resp => {
-                return resp.data;
-            }).catch(error => {
-                return error;
-            });
+        }).then(resp => {
+            return resp.data;
+        }).catch(error => {
+            return error;
+        });
     }
 
-    static saveWebcam(galleryId, webcam) {
+    static saveWebcam(galleryId: string, webcam: Object) {
 
         const url = conf.req.apiUrl + conf.req.webcams;
         const headers = this.myWebcamsRequestHeaders();
@@ -97,9 +58,11 @@ export default class WebcamApi {
             collectionID: galleryId,
         };
 
-        return axios.put(url, {
+        return axios({
+            method: 'put',
+            url: url,
             headers: headers,
-            body: requestObj,
+            data: requestObj,
         }).then(resp => {
             return resp;
         }).catch(err => {
@@ -113,23 +76,22 @@ export default class WebcamApi {
         const headers = this.myWebcamsRequestHeaders();
         const requestObj = {
             webcamID: webcam.webcamID,
-            collectionID: webcam.collectionID, /// you should send id (but u nedd two ids)
+            collectionID: webcam.collectionID,
         };
-
-        return axios.post(url, {
+        // TODO - change to delete method
+        return axios({
+            method: 'post',
+            url: url,
             headers: headers,
-            params: requestObj,
+            data: requestObj,
         }).then(resp => {
-            console.log('deleted', resp);
             if (resp.data.success === true) {
                 return resp.data;
+            } else {
+                return resp.data.error;
             }
         }).catch(err => {
             console.log(err);
         });
     }
-}
-
-export function parseJSON(response: Object) {
-    return response.json();
 }

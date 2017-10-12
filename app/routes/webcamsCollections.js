@@ -5,6 +5,7 @@ const router = express.Router();
 
 /* GET user collections. */
 router.get('/', (req, res) => {
+
     models.WebcamsCollections.findAll({
         where: {
             UserId: req.decoded.id
@@ -14,11 +15,12 @@ router.get('/', (req, res) => {
     }).catch((error) => {
         console.log(error);
     });
+
 });
 
 /* CREATE user collection */
 router.put('/', (req, res) => {
-    const request = JSON.parse(JSON.stringify(req.body.body));
+    const request = req.body;
 
     models.WebcamsCollections.findOrCreate({
         where: {
@@ -34,6 +36,7 @@ router.put('/', (req, res) => {
 
 /* DELETE user collection */
 router.delete('/', (req, res) => {
+
     models.WebcamsCollections.findOne({
         where: {
             UserId: req.decoded.id,
@@ -41,7 +44,7 @@ router.delete('/', (req, res) => {
         }
     }).then(collection => {
         collection.destroy();
-        return res.status(200).send({ success: true, msg: 'Gallery destroyed' }); 
+        return res.status(200).send({ success: true, msg: 'Gallery destroyed' });
     }).catch((error) => {
         res.status(200).send(error);
     });

@@ -1,7 +1,6 @@
 import React from 'react';
 import TagList from './TagList'
 
-
 type Props = {
     search: (category: string, query: string) => void
 }

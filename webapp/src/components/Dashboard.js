@@ -11,13 +11,14 @@ type Props = {
     uploadWebcams: (id: string) => void,
     deleteWebcam: (webcam: Object) => void,
     galleries: Array<Object>,
-    savedWebcams: Array<Object>,
+    galleryWebcams: Object,
+    type: string
 }
 
 type Store = {
     galleries: Array<Object>,
     position: string,
-    savedWebcams: Array<Object>,
+    galleryWebcams: Object,
 }
 
 class Dashboard extends React.Component<Props> {
@@ -30,11 +31,12 @@ class Dashboard extends React.Component<Props> {
         this.props.uploadWebcams(id);
     }
 
-    deleteWebcam(webcam) {
+    deleteWebcam(webcam: Object) {
         this.props.deleteWebcam(webcam);
     }
 
     render() {
+
         return (
             <div className="container">
                 <h3>List of your Galleries</h3>
@@ -46,7 +48,7 @@ class Dashboard extends React.Component<Props> {
                     type={'dashboard'}
                 />
                 <WebcamList
-                    webcams={this.props.savedWebcams}
+                    webcams={this.props.galleryWebcams}
                     type={'dashboard'}
                     onDelete={(webcam) => this.deleteWebcam(webcam)}
                 />
@@ -59,7 +61,7 @@ const mapStateToProps = (state: Store) => {
     return {
         galleries: state.galleries,
         position: state.position,
-        savedWebcams: state.savedWebcams,
+        galleryWebcams: state.galleryWebcams,
     };
 };
 

@@ -3,20 +3,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { logout } from '../actions/sessionActions';
 import { connect } from 'react-redux';
-import { setPosition, getPosition } from '../actions/positionActions';
+import { setPosition } from '../actions/positionActions';
 
 type State = {
     position: string
 }
 
 type Props = {
+    position: string,
     setPosition: () => void,
     logout: () => void,
-    position: string,
 }
 
 class Navigation extends React.Component<Props, {}> {
-
     componentWillMount() {
         this.props.setPosition();
     }
@@ -30,13 +29,13 @@ class Navigation extends React.Component<Props, {}> {
             <div className="container">
                 <ul className="nav nav-tabs ">
                     <li role="presentation">
-                        <Link to="/dashboard">Dashboard</Link>
+                        <Link to="/dashboard/0">Dashboard</Link>
                     </li>
                     <li role="presentation">
-                        <Link to="/scanner">Scanner</Link>
+                        <Link to="/scanner/0">Scanner</Link>
                     </li>
                     <li role="presentation">
-                        <Link to={'/map/' + this.props.position}>Map</Link>
+                        <Link to={'/map/0' + this.props.position}>Map</Link>
                     </li>
                     <li role="presentation" onClick={() => this.logout()}>
                         <Link to="/">Logout</Link>
@@ -52,8 +51,8 @@ const mapStateToProps = (state: State) => {
         position: state.position,
     };
 };
-//TODO Flow
-const mapDispatchToProps = (dispatch: () => void) => {
+
+const mapDispatchToProps = (dispatch) => {
     return {
         setPosition: () => {
             dispatch(setPosition());

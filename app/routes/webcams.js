@@ -4,7 +4,7 @@ import models from '../models';
 const router = express.Router();
 
 router.get('/:id', (req, res) => {
-    console.log(req.params, 'lololo')
+
     models.Webcams.findAll({
         where: {
             userID: req.decoded.id,
@@ -13,7 +13,6 @@ router.get('/:id', (req, res) => {
             ]
         }
     }).then(collection => {
-        console.log('collection', )
         res.status(200).send(collection);
     }).catch((error) => {
         res.status(200).send({ error: error });
@@ -23,8 +22,8 @@ router.get('/:id', (req, res) => {
 
 router.put('/', (req, res) => {
 
-    const request = JSON.parse(JSON.stringify(req.body.body))
-    console.log('request.collectionID', request.collectionID)
+    let request = req.body;
+
     models.Webcams.find({
         where: {
             webcamID: request.webcam.webcamID,
@@ -33,9 +32,9 @@ router.put('/', (req, res) => {
                 { userID: req.decoded.id }
             ]
         }
-        
+
     }).then(webcam => {
- 
+
         if (webcam) {
             res.status(200).send({ success: false, error: 'Webcam already saved in this collection.' });
         } else {
@@ -67,7 +66,9 @@ router.put('/', (req, res) => {
 });
 
 router.post('/delete/', (req, res) => {
-    const webcam = req.body.params
+
+    const webcam = req.body;
+
     models.Webcams.findOne({
         where: {
             collectionID: webcam.collectionID,

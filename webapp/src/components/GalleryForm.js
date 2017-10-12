@@ -15,9 +15,11 @@ class GalleryForm extends React.Component<Props, State> {
         this.state = {
             name: '',
         }
+        this.onSave = this.onSave.bind(this);
     }
 
-    onClick() {
+    onSave(e) {
+        e.preventDefault();
         const name = this.state.name;
         this.props.onClick(name);
     }
@@ -29,10 +31,11 @@ class GalleryForm extends React.Component<Props, State> {
 
     render() {
         return (
-            <div className="col-xs-10 col-sm-6 col-md-6">
-                <form className="form-group">
+            <div className="col-xs-10 col-sm-6 col-md-6 alert alert-success">
+                <p>For adding new gallery write its name and save</p>
+                <form className="form-group ">
                     <input name="galleryname" className="form-control" type="text" placeholder="New gallery name" onChange={(e) => this.onChange(e)} />
-                    <input type="button" className="btn btn-default" onClick={() => this.onClick()} value="Save" />
+                    <input type="submit" className="btn btn-default btn-gallery-save" onClick={this.onSave} value="Save" />
                 </form>
             </div>
         )

@@ -7,32 +7,32 @@ type State = {
     showHideGalleryList: string,
 }
 
+type WebcamType = {
+    webcamID: string,
+    city: string,
+    country: string,
+    countryCode: string,
+    views: string,
+    lat: string,
+    lng: string,
+    position?: string,
+    thumbnail: string,
+    title: string,
+    link: string,
+    type: string,
+    showWebcam?: string
+}
+
 type Props = {
+    showWebcam?: string,
+    webcam: WebcamType,
+    galleries?: Array<Object>,
+    type: string,
+    showHideGalleryList?: string,
+    key?: string,
     onSave?: (id: string) => void,
     hideWebcam?: () => void,
     onDelete?: () => void,
-    showWebcam?: string,
-    webcam: WebcamType,
-    galleries: [Object],
-    type: string,
-    showHideGalleryList: string,
-    key: any
-}
-
-type WebcamType = {
-    webcamID?: string,
-    city?: string,
-    country?: string,
-    countryCode?: string,
-    views?: string,
-    lat?: string,
-    lng?: string,
-    position?: string,
-    thumbnail?: string,
-    title?: string,
-    link?: string,
-    type?: string,
-    showWebcam?: string
 }
 
 class Webcam extends React.Component<Props, State> {
@@ -93,14 +93,14 @@ class Webcam extends React.Component<Props, State> {
 
                             <div className={btnScannerClass}>
                                 <button type="button" className="btn btn-success" onClick={() => this.toggleGalleryList()}>Save</button>
-                                <button type="button" className="btn btn-default" onClick={() => this.props.hideWebcam(this.props.webcam.webcamID)}>Hide</button>
+                                <button type="button" className="btn btn-default" onClick={() => this.props.hideWebcam()}>Hide</button>
                             </div>
 
                             <div className={btnGalleryClass}>
                                 <button type="button" className="btn btn-danger" onClick={() => this.props.onDelete()}>Delete</button>
                             </div>
 
-                            {/* GalleryList id displayed when you want to save webcam */}
+                            {/* GalleryList id displayed only when you want to save webcam in scanner component */}
                             <div className={this.state.showHideGalleryList} >
                                 <GalleryList
                                     type={this.props.type}
@@ -115,9 +115,10 @@ class Webcam extends React.Component<Props, State> {
                             <div>
                                 <Link to={'/map/' + this.props.webcam.lat + ',' + this.props.webcam.lng}>Map</Link>
                             </div>
-                            <div>
+                            {/* TODO */}
+                            {/* <div>
                                 <Link to={'/scanner/' + this.props.webcam.country}>More from this country</Link>
-                            </div>
+                            </div> */}
                         </div>
 
                     </div>

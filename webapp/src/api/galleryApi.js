@@ -15,9 +15,10 @@ class GalleryApi {
 
         const url = conf.req.apiUrl + conf.req.webcamcollections;
         const headers = this.myWebcamsRequestHeaders();
-        const token = sessionStorage.getItem('token');
 
-        return axios.get(url, {
+        return axios({
+            method: 'get',
+            url: url,
             headers: headers,
             withCredentials: true,
         }).then(response => {
@@ -31,10 +32,12 @@ class GalleryApi {
         const url = conf.req.apiUrl + conf.req.webcamcollections;
         const headers = this.myWebcamsRequestHeaders();
 
-        return axios.put(url, {
+        return axios({
+            method: 'put',
+            url: url,
             headers: headers,
             withCredentials: true,
-            body: { name: name },
+            data: { name: name },
         }).then(resp => {
             return resp;
         }).catch(err => {
@@ -56,7 +59,6 @@ class GalleryApi {
             console.log(err);
         });
     }
-
 }
 
 export default GalleryApi;
